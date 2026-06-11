@@ -1,0 +1,581 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DTLmenu -- NetDTL Suite</title>
+<HTA:APPLICATION
+  APPLICATIONNAME="DTLmenu"
+  CAPTION="yes"
+  SHOWINTASKBAR="yes"
+  SINGLEINSTANCE="yes"
+  WINDOWSTATE="normal"
+  SCROLL="auto"
+  BORDER="thin"
+/>
+<style>
+  body {
+    background: #090d12;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    color: #c9d1d9;
+  }
+
+  .dtl-wrap {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid #30363d;
+  }
+
+  .dtl-titlebar {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 9px 16px;
+    font-size: 14px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+  .dtl-dot {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 7px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .dtl-body { padding: 20px 24px 28px; }
+
+  .dtl-header { color: #00ff00; font-size: 16px; margin: 0 0 4px; }
+  .dtl-sub    { color: #444c56; font-size: 12px; margin: 0 0 14px; }
+  .dtl-sep    { border: none; border-top: 1px solid #21262d; margin: 0 0 16px; }
+
+  .dtl-section-label {
+    color: #6e7681;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    display: block;
+  }
+
+  .dtl-grid-wrap  { margin-bottom: 12px; font-size: 0; }
+  .dtl-grid-wrap .dtl-btn {
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  .dtl-grid-wrap .dtl-btn:nth-child(odd) { margin-right: 1%; }
+
+  .dtl-grid3-wrap { margin-bottom: 12px; font-size: 0; }
+  .dtl-grid3-wrap .dtl-btn {
+    display: inline-block;
+    width: 32%;
+    vertical-align: top;
+    margin-bottom: 6px;
+    margin-right: 1%;
+    font-size: 14px;
+  }
+  .dtl-grid3-wrap .dtl-btn:last-child { margin-right: 0; }
+
+  .dtl-grid1-wrap { margin-bottom: 12px; }
+  .dtl-grid1-wrap .dtl-btn { display: block; width: 100%; font-size: 14px; }
+
+  .dtl-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: "Courier New", Courier, monospace;
+    color: #c9d1d9;
+    box-sizing: border-box;
+  }
+  .dtl-btn:hover  { border-color: #1a6bbf; background: #0d1f33; }
+  .dtl-btn-num   { color: #1a6bbf; font-size: 16px; font-weight: bold; }
+  .dtl-btn-sub   { color: #6e7681; font-size: 12px; display: block; margin-top: 3px; }
+  .dtl-tag {
+    font-size: 11px;
+    padding: 1px 6px;
+    font-family: "Courier New", Courier, monospace;
+    border: 1px solid #3d4499;
+    background: #1a1a3d;
+    color: #9ea6f5;
+  }
+  .dtl-tag-py  { border: 1px solid #1a6bbf; background: #001a33; color: #58a6ff; }
+
+  .dtl-btn-quit   { border-color: #3d1a1a; }
+  .dtl-btn-quit:hover { border-color: #e24b4a; background: #1a0000; }
+  .dtl-btn-quit .dtl-btn-num { color: #e24b4a; }
+
+  .dtl-info-box {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-left: 3px solid #1a6bbf;
+    padding: 14px 16px;
+    margin-top: 12px;
+    font-size: 14px;
+  }
+  .dtl-info-line { color: #8b949e; line-height: 2.0; }
+  .key   { color: #1a6bbf; }
+  .val   { color: #c9d1d9; }
+  .ipath { color: #00ff00; font-size: 13px; }
+
+  .dtl-cmd-box {
+    background: #0a0d10;
+    border: 1px solid #21262d;
+    padding: 12px 14px;
+    margin-top: 12px;
+  }
+  .dtl-cmd-title { color: #00ff00; margin-bottom: 10px; font-size: 14px; }
+  .dtl-cmd-line    { color: #58a6ff; line-height: 2.0; display: block; font-size: 13px; }
+  .dtl-cmd-comment { color: #444c56; line-height: 2.0; display: block; font-size: 13px; }
+  .dtl-cmd-echo    { color: #8b949e; line-height: 2.0; display: block; font-size: 13px; }
+
+  .dtl-run-btn {
+    float: right;
+    background: #001a00;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    font-size: 13px;
+    padding: 3px 12px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .dtl-run-btn:hover { background: #003300; }
+
+  .dtl-folder-btn {
+    background: none;
+    border: 1px solid #21262d;
+    color: #58a6ff;
+    font-size: 12px;
+    padding: 2px 10px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
+    margin-left: 8px;
+  }
+  .dtl-folder-btn:hover { color: #c9d1d9; border-color: #8b949e; }
+
+  .dtl-back {
+    background: none;
+    border: 1px solid #21262d;
+    color: #6e7681;
+    font-size: 13px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
+    margin-top: 16px;
+    display: inline-block;
+  }
+  .dtl-back:hover { color: #c9d1d9; border-color: #444c56; }
+
+  .screen { display: none; }
+  .screen-active { display: block; }
+
+  .dtl-config {
+    background: #0a0d10;
+    border: 1px solid #21262d;
+    border-left: 3px solid #00ff00;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    color: #6e7681;
+  }
+  .dtl-config label { color: #8b949e; }
+  .dtl-config input {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #00ff00;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    padding: 4px 8px;
+    width: 78%;
+  }
+  .dtl-config-btn {
+    background: none;
+    border: 1px solid #30363d;
+    color: #6e7681;
+    font-size: 13px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
+    margin-left: 8px;
+  }
+  .dtl-config-btn:hover { color: #00ff00; border-color: #00ff00; }
+</style>
+</head>
+<body>
+
+<div class="dtl-wrap">
+  <div class="dtl-titlebar"><span class="dtl-dot" style="background:#ff5f57;"></span><span class="dtl-dot" style="background:#ffbd2e;"></span><span class="dtl-dot" style="background:#28c840;"></span>&nbsp; DTLmenu &mdash; Lanceur de compilation NetDTL Suite</div>
+  <div class="dtl-body">
+
+    <div class="dtl-config">
+      <label>ROOT_DIR&nbsp;&nbsp;</label>
+      <input type="text" id="root-dir" value="C:\Users\Utilisateur\Documents\Mes sites Web\Secours catholique\outils">
+      <button class="dtl-config-btn" onclick="applyRoot()">appliquer</button>
+    </div>
+
+    <!-- MAIN MENU -->
+    <div id="screen-main" class="screen-active">
+      <p class="dtl-header">MENU DE COMPILATION DTL</p>
+      <p class="dtl-sub">DEC VT100 TRIBUTE &bull; MIT LICENSE &bull; didiermorandi.com/netdtl</p>
+      <hr class="dtl-sep">
+
+      <span class="dtl-section-label">Compilation individuelle</span>
+      <div class="dtl-grid-wrap">
+        <button class="dtl-btn" onclick="show('dtlknowswhy')">
+          <span class="dtl-btn-num">1</span>&nbsp;
+          DTLknowsWhy <span class="dtl-tag dtl-tag-py">Python</span>
+          <span class="dtl-btn-sub">+ CLI + Agent</span>
+        </button>
+        <button class="dtl-btn" onclick="show('dtlsayswhat')">
+          <span class="dtl-btn-num">2</span>&nbsp;
+          DTLsaysWhat <span class="dtl-tag dtl-tag-py">Python</span>
+          <span class="dtl-btn-sub">onefile console</span>
+        </button>
+        <button class="dtl-btn" onclick="show('netdtl')">
+          <span class="dtl-btn-num">3</span>&nbsp;
+          NetDTL <span class="dtl-tag">PHP/MySQL</span>
+          <span class="dtl-btn-sub">Information seulement</span>
+        </button>
+        <button class="dtl-btn" onclick="show('gitdtl')">
+          <span class="dtl-btn-num">4</span>&nbsp;
+          GitDTL <span class="dtl-tag dtl-tag-py">Python</span>
+          <span class="dtl-btn-sub">Tkinter GUI</span>
+        </button>
+      </div>
+
+      <span class="dtl-section-label">Actions globales</span>
+      <div class="dtl-grid3-wrap">
+        <button class="dtl-btn" onclick="show('all')">
+          <span class="dtl-btn-num">5</span>&nbsp;
+          Tous les outils Python
+          <span class="dtl-btn-sub">Build complet</span>
+        </button>
+        <button class="dtl-btn" onclick="show('folders')">
+          <span class="dtl-btn-num">6</span>&nbsp;
+          Ouvrir un dossier
+          <span class="dtl-btn-sub">Chemins dist\</span>
+        </button>
+        <button class="dtl-btn" onclick="show('pyinstaller')">
+          <span class="dtl-btn-num">7</span>&nbsp;
+          Verifier PyInstaller
+          <span class="dtl-btn-sub">Environnement</span>
+        </button>
+      </div>
+
+      <div class="dtl-grid1-wrap">
+        <button class="dtl-btn dtl-btn-quit" onclick="window.close()">
+          <span class="dtl-btn-num">0</span>&nbsp; Quitter
+        </button>
+      </div>
+    </div>
+
+    <!-- DTLknowsWhy -->
+    <div id="screen-dtlknowswhy" class="screen">
+      <p class="dtl-header">Compilation DTLknowsWhy</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-dkw','Compilation DTLknowsWhy')">&#9654; executer</button>
+          DTLknowsWhy.exe &bull; DTLknowsWhy-CLI.exe &bull; DTLknowsWhy-Agent.exe
+        </div>
+        <div id="blk-dkw">
+          <span class="dtl-cmd-line" id="dkw_1"></span>
+          <span class="dtl-cmd-line" id="dkw_2"></span>
+          <span class="dtl-cmd-line" id="dkw_3"></span>
+          <span class="dtl-cmd-line" id="dkw_4"></span>
+          <span class="dtl-cmd-line" id="dkw_5"></span>
+          <span class="dtl-cmd-line" id="dkw_6"></span>
+          <span class="dtl-cmd-echo" id="dkw_7"></span>
+          <span class="dtl-cmd-echo" id="dkw_8"></span>
+          <span class="dtl-cmd-echo" id="dkw_9"></span>
+          <span class="dtl-cmd-echo" id="dkw_10"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+    <!-- DTLsaysWhat -->
+    <div id="screen-dtlsayswhat" class="screen">
+      <p class="dtl-header">Compilation DTLsaysWhat</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-dsw','Compilation DTLsaysWhat')">&#9654; executer</button>
+          DTLsaysWhat.exe
+        </div>
+        <div id="blk-dsw">
+          <span class="dtl-cmd-line" id="dsw_1"></span>
+          <span class="dtl-cmd-line" id="dsw_2"></span>
+          <span class="dtl-cmd-line" id="dsw_3"></span>
+          <span class="dtl-cmd-echo" id="dsw_4"></span>
+          <span class="dtl-cmd-echo" id="dsw_5"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+    <!-- NetDTL -->
+    <div id="screen-netdtl" class="screen">
+      <p class="dtl-header">NetDTL &mdash; Information</p>
+      <hr class="dtl-sep">
+      <div class="dtl-info-box">
+        <div class="dtl-info-line"><span class="key">Type      </span> <span class="val">Application PHP / MySQL</span></div>
+        <div class="dtl-info-line"><span class="key">Build     </span> <span class="val">Aucune compilation PyInstaller requise</span></div>
+        <div class="dtl-info-line"><span class="key">Statut    </span> <span class="val">Produit deja publie / release</span></div>
+        <div class="dtl-info-line"><span class="key">Dossier   </span> <span class="ipath" id="netdtl-path"></span></div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+    <!-- GitDTL -->
+    <div id="screen-gitdtl" class="screen">
+      <p class="dtl-header">Compilation GitDTL</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-gdtl','Compilation GitDTL')">&#9654; executer</button>
+          GitDTL.exe
+        </div>
+        <div id="blk-gdtl">
+          <span class="dtl-cmd-line" id="gdtl_1"></span>
+          <span class="dtl-cmd-line" id="gdtl_2"></span>
+          <span class="dtl-cmd-echo" id="gdtl_3"></span>
+          <span class="dtl-cmd-echo" id="gdtl_4"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+    <!-- Build all -->
+    <div id="screen-all" class="screen">
+      <p class="dtl-header">Compilation complete &mdash; outils Python DTL</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; executer</button>
+          DTLknowsWhy + DTLsaysWhat + GitDTL
+        </div>
+        <div id="blk-all">
+          <span class="dtl-cmd-comment">--- DTLknowsWhy ---</span>
+          <span class="dtl-cmd-line" id="all_1"></span>
+          <span class="dtl-cmd-line" id="all_2"></span>
+          <span class="dtl-cmd-line" id="all_3"></span>
+          <span class="dtl-cmd-line" id="all_4"></span>
+          <span class="dtl-cmd-line" id="all_5"></span>
+          <span class="dtl-cmd-line" id="all_6"></span>
+          <span class="dtl-cmd-comment">--- DTLsaysWhat ---</span>
+          <span class="dtl-cmd-line" id="all_7"></span>
+          <span class="dtl-cmd-line" id="all_8"></span>
+          <span class="dtl-cmd-line" id="all_9"></span>
+          <span class="dtl-cmd-comment">--- GitDTL ---</span>
+          <span class="dtl-cmd-line" id="all_10"></span>
+          <span class="dtl-cmd-line" id="all_11"></span>
+          <span class="dtl-cmd-echo" id="all_12"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+    <!-- Folders -->
+    <div id="screen-folders" class="screen">
+      <p class="dtl-header">Dossiers d'executables</p>
+      <hr class="dtl-sep">
+      <div class="dtl-info-box">
+        <div class="dtl-info-line"><span class="key">1 </span><span class="ipath" id="f-dkw"></span> <button class="dtl-folder-btn" onclick="openFolder('dkw')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">2 </span><span class="ipath" id="f-dsw"></span> <button class="dtl-folder-btn" onclick="openFolder('dsw')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">3 </span><span class="ipath" id="f-gdtl"></span> <button class="dtl-folder-btn" onclick="openFolder('gdtl')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">4 </span><span class="ipath" id="f-root"></span> <button class="dtl-folder-btn" onclick="openFolder('root')">ouvrir</button></div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+    <!-- PyInstaller -->
+    <div id="screen-pyinstaller" class="screen">
+      <p class="dtl-header">Verification PyInstaller</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-pyi','Verification PyInstaller')">&#9654; executer</button>
+          Environnement Python / PyInstaller
+        </div>
+        <div id="blk-pyi">
+          <span class="dtl-cmd-line" id="pyi_1"></span>
+          <span class="dtl-cmd-line" id="pyi_2"></span>
+          <span class="dtl-cmd-line" id="pyi_3"></span>
+          <span class="dtl-cmd-echo" id="pyi_4"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
+  </div>
+</div>
+
+<script language="JScript">
+
+function getPaths() {
+  var root = document.getElementById('root-dir').value;
+  return {
+    ROOT:  root,
+    DKW:   root + '\\DTLKnowsWhy',
+    DSW:   root + '\\DTLsaysWhat',
+    NET:   root + '\\NetDTL',
+    GDTL:  root + '\\GitDTL'
+  };
+}
+
+function R(s) {
+  var p = getPaths();
+  s = s.replace(/\{ROOT\}/g,  p.ROOT);
+  s = s.replace(/\{DKW\}/g,   p.DKW);
+  s = s.replace(/\{DSW\}/g,   p.DSW);
+  s = s.replace(/\{NET\}/g,   p.NET);
+  s = s.replace(/\{GDTL\}/g,  p.GDTL);
+  return s;
+}
+
+function setLine(id, tpl) {
+  var el = document.getElementById(id);
+  if (el) el.innerText = R(tpl);
+}
+
+function renderAll() {
+  var p = getPaths();
+
+  setLine('dkw_1',  'cd /d "{DKW}"');
+  setLine('dkw_2',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
+  setLine('dkw_3',  'python -m PyInstaller DTLknowsWhy.spec');
+  setLine('dkw_4',  'python -m PyInstaller DTLknowsWhy-CLI.spec');
+  setLine('dkw_5',  'cd /d "{DKW}\\agent"');
+  setLine('dkw_6',  'python -m PyInstaller --distpath "..\\dist" --workpath "..\\build\\DTLknowsWhy-Agent" DTLknowsWhy-Agent.spec');
+  setLine('dkw_7',  'Executables attendus :');
+  setLine('dkw_8',  '{DKW}\\dist\\DTLknowsWhy.exe');
+  setLine('dkw_9',  '{DKW}\\dist\\DTLknowsWhy-CLI.exe');
+  setLine('dkw_10', '{DKW}\\dist\\DTLknowsWhy-Agent.exe');
+
+  setLine('dsw_1', 'cd /d "{DSW}"');
+  setLine('dsw_2', 'python -c "import wmi, psutil; print(\'Dependances DTLsaysWhat OK\')"');
+  setLine('dsw_3', 'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
+  setLine('dsw_4', 'Executable attendu :');
+  setLine('dsw_5', '{DSW}\\dist\\DTLsaysWhat.exe');
+
+  setLine('gdtl_1', 'cd /d "{GDTL}"');
+  setLine('gdtl_2', 'python -m PyInstaller GitDTL.spec');
+  setLine('gdtl_3', 'Executable attendu :');
+  setLine('gdtl_4', '{GDTL}\\dist\\GitDTL.exe');
+
+  setLine('all_1',  'cd /d "{DKW}"');
+  setLine('all_2',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
+  setLine('all_3',  'python -m PyInstaller DTLknowsWhy.spec');
+  setLine('all_4',  'python -m PyInstaller DTLknowsWhy-CLI.spec');
+  setLine('all_5',  'cd /d "{DKW}\\agent"');
+  setLine('all_6',  'python -m PyInstaller --distpath "..\\dist" --workpath "..\\build\\DTLknowsWhy-Agent" DTLknowsWhy-Agent.spec');
+  setLine('all_7',  'cd /d "{DSW}"');
+  setLine('all_8',  'python -c "import wmi, psutil; print(\'Dependances DTLsaysWhat OK\')"');
+  setLine('all_9',  'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
+  setLine('all_10', 'cd /d "{GDTL}"');
+  setLine('all_11', 'python -m PyInstaller GitDTL.spec');
+  setLine('all_12', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat et GitDTL.');
+
+  setLine('pyi_1', 'cd /d "{ROOT}"');
+  setLine('pyi_2', 'python --version');
+  setLine('pyi_3', 'python -m PyInstaller --version');
+  setLine('pyi_4', 'Si une version PyInstaller s\'affiche, l\'environnement est pret.');
+
+  document.getElementById('netdtl-path').innerText = p.NET;
+  document.getElementById('f-dkw').innerText   = p.DKW  + '\\dist';
+  document.getElementById('f-dsw').innerText   = p.DSW  + '\\dist';
+  document.getElementById('f-gdtl').innerText  = p.GDTL + '\\dist';
+  document.getElementById('f-root').innerText  = p.ROOT;
+}
+
+function applyRoot() { renderAll(); }
+
+function show(id) {
+  var all = document.body.getElementsByTagName('div');
+  var i, el;
+  for (i = 0; i < all.length; i++) {
+    el = all[i];
+    if (el.id && el.id.indexOf('screen-') === 0) {
+      el.className = 'screen';
+    }
+  }
+  el = document.getElementById('screen-' + id);
+  if (el) el.className = 'screen-active';
+}
+
+function buildScript(blockId, title) {
+  var el = document.getElementById(blockId);
+  if (!el) return '';
+  var lines = [];
+  lines.push('@echo off');
+  lines.push('chcp 65001 >nul');
+  lines.push('title ' + title);
+  lines.push('echo ' + title);
+  lines.push('echo ================================================================');
+  lines.push('echo.');
+
+  var spans = el.getElementsByTagName('span');
+  for (var i = 0; i < spans.length; i++) {
+    var t   = spans[i].innerText;
+    var cls = spans[i].className;
+    if (!t) continue;
+    if (cls === 'dtl-cmd-comment') {
+      lines.push('rem ' + t);
+    } else if (cls === 'dtl-cmd-echo') {
+      lines.push('echo ' + t);
+    } else if (cls === 'dtl-cmd-line') {
+      lines.push(t);
+      if (t.indexOf('python') === 0) {
+        lines.push('if errorlevel 1 goto :error');
+      }
+    }
+  }
+
+  lines.push('echo.');
+  lines.push('echo Operation terminee.');
+  lines.push('goto :end');
+  lines.push(':error');
+  lines.push('echo.');
+  lines.push('echo ERREUR : la derniere commande a echoue.');
+  lines.push(':end');
+  lines.push('echo.');
+  lines.push('pause');
+  return lines.join('\r\n');
+}
+
+function runBlock(blockId, title) {
+  var script = buildScript(blockId, title);
+  if (!script) return;
+  var fso   = new ActiveXObject('Scripting.FileSystemObject');
+  var shell = new ActiveXObject('WScript.Shell');
+  var tmp   = shell.ExpandEnvironmentStrings('%TEMP%');
+  var path  = tmp + '\\DTLmenu_run.cmd';
+  var f = fso.CreateTextFile(path, true, false);
+  f.Write(script);
+  f.Close();
+  shell.Run('"' + path + '"', 1, false);
+}
+
+function openFolder(key) {
+  var p = getPaths();
+  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', root: p.ROOT };
+  var path = dirs[key];
+  if (!path) return;
+  var fso = new ActiveXObject('Scripting.FileSystemObject');
+  if (fso.FolderExists(path)) {
+    var shell = new ActiveXObject('WScript.Shell');
+    shell.Run('explorer.exe "' + path + '"', 1, false);
+  } else {
+    alert('Dossier introuvable :\n' + path);
+  }
+}
+
+renderAll();
+</script>
+</body>
+</html>
