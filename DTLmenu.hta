@@ -294,10 +294,11 @@
           <span class="dtl-cmd-line" id="dkw_4"></span>
           <span class="dtl-cmd-line" id="dkw_5"></span>
           <span class="dtl-cmd-line" id="dkw_6"></span>
-          <span class="dtl-cmd-echo" id="dkw_7"></span>
+          <span class="dtl-cmd-line" id="dkw_7"></span>
           <span class="dtl-cmd-echo" id="dkw_8"></span>
           <span class="dtl-cmd-echo" id="dkw_9"></span>
           <span class="dtl-cmd-echo" id="dkw_10"></span>
+          <span class="dtl-cmd-echo" id="dkw_11"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -316,8 +317,9 @@
           <span class="dtl-cmd-line" id="dsw_1"></span>
           <span class="dtl-cmd-line" id="dsw_2"></span>
           <span class="dtl-cmd-line" id="dsw_3"></span>
-          <span class="dtl-cmd-echo" id="dsw_4"></span>
+          <span class="dtl-cmd-line" id="dsw_4"></span>
           <span class="dtl-cmd-echo" id="dsw_5"></span>
+          <span class="dtl-cmd-echo" id="dsw_6"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -348,8 +350,9 @@
         <div id="blk-gdtl">
           <span class="dtl-cmd-line" id="gdtl_1"></span>
           <span class="dtl-cmd-line" id="gdtl_2"></span>
-          <span class="dtl-cmd-echo" id="gdtl_3"></span>
+          <span class="dtl-cmd-line" id="gdtl_3"></span>
           <span class="dtl-cmd-echo" id="gdtl_4"></span>
+          <span class="dtl-cmd-echo" id="gdtl_5"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -367,8 +370,9 @@
         <div id="blk-ghm">
           <span class="dtl-cmd-line" id="ghm_1"></span>
           <span class="dtl-cmd-line" id="ghm_2"></span>
-          <span class="dtl-cmd-echo" id="ghm_3"></span>
+          <span class="dtl-cmd-line" id="ghm_3"></span>
           <span class="dtl-cmd-echo" id="ghm_4"></span>
+          <span class="dtl-cmd-echo" id="ghm_5"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -391,17 +395,21 @@
           <span class="dtl-cmd-line" id="all_4"></span>
           <span class="dtl-cmd-line" id="all_5"></span>
           <span class="dtl-cmd-line" id="all_6"></span>
-          <span class="dtl-cmd-comment">--- DTLsaysWhat ---</span>
           <span class="dtl-cmd-line" id="all_7"></span>
+          <span class="dtl-cmd-comment">--- DTLsaysWhat ---</span>
           <span class="dtl-cmd-line" id="all_8"></span>
           <span class="dtl-cmd-line" id="all_9"></span>
-          <span class="dtl-cmd-comment">--- GitDTL ---</span>
           <span class="dtl-cmd-line" id="all_10"></span>
+          <span class="dtl-cmd-comment">--- GitDTL ---</span>
           <span class="dtl-cmd-line" id="all_11"></span>
-          <span class="dtl-cmd-comment">--- GitHubMenu ---</span>
           <span class="dtl-cmd-line" id="all_12"></span>
+          <span class="dtl-cmd-comment">--- GitHubMenu ---</span>
           <span class="dtl-cmd-line" id="all_13"></span>
-          <span class="dtl-cmd-echo" id="all_14"></span>
+          <span class="dtl-cmd-line" id="all_14"></span>
+          <span class="dtl-cmd-line" id="all_15"></span>
+          <span class="dtl-cmd-line" id="all_16"></span>
+          <span class="dtl-cmd-line" id="all_17"></span>
+          <span class="dtl-cmd-echo" id="all_18"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -477,46 +485,54 @@ function renderAll() {
   var p = getPaths();
 
   setLine('dkw_1',  'cd /d "{DKW}"');
-  setLine('dkw_2',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
-  setLine('dkw_3',  'python -m PyInstaller DTLknowsWhy.spec');
-  setLine('dkw_4',  'python -m PyInstaller DTLknowsWhy-CLI.spec');
-  setLine('dkw_5',  'cd /d "{DKW}\\agent"');
-  setLine('dkw_6',  'python -m PyInstaller --distpath "..\\dist" --workpath "..\\build\\DTLknowsWhy-Agent" DTLknowsWhy-Agent.spec');
-  setLine('dkw_7',  'Executables attendus :');
-  setLine('dkw_8',  '{DKW}\\dist\\DTLknowsWhy.exe');
-  setLine('dkw_9',  '{DKW}\\dist\\DTLknowsWhy-CLI.exe');
-  setLine('dkw_10', '{DKW}\\dist\\DTLknowsWhy-Agent.exe');
+  setLine('dkw_2',  'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DKW}" DTLknowsWhy');
+  setLine('dkw_3',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
+  setLine('dkw_4',  'python -m PyInstaller DTLknowsWhy.spec');
+  setLine('dkw_5',  'python -m PyInstaller DTLknowsWhy-CLI.spec');
+  setLine('dkw_6',  'cd /d "{DKW}\\agent"');
+  setLine('dkw_7',  'python -m PyInstaller --distpath "..\\dist" --workpath "..\\build\\DTLknowsWhy-Agent" DTLknowsWhy-Agent.spec');
+  setLine('dkw_8',  'Executables attendus :');
+  setLine('dkw_9',  '{DKW}\\dist\\DTLknowsWhy.exe');
+  setLine('dkw_10', '{DKW}\\dist\\DTLknowsWhy-CLI.exe');
+  setLine('dkw_11', '{DKW}\\dist\\DTLknowsWhy-Agent.exe');
 
   setLine('dsw_1', 'cd /d "{DSW}"');
-  setLine('dsw_2', 'python -c "import wmi, psutil; print(\'Dependances DTLsaysWhat OK\')"');
-  setLine('dsw_3', 'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
-  setLine('dsw_4', 'Executable attendu :');
-  setLine('dsw_5', '{DSW}\\dist\\DTLsaysWhat.exe');
+  setLine('dsw_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DSW}" DTLsaysWhat');
+  setLine('dsw_3', 'python -c "import wmi, psutil; print(\'Dependances DTLsaysWhat OK\')"');
+  setLine('dsw_4', 'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
+  setLine('dsw_5', 'Executable attendu :');
+  setLine('dsw_6', '{DSW}\\dist\\DTLsaysWhat.exe');
 
   setLine('gdtl_1', 'cd /d "{GDTL}"');
-  setLine('gdtl_2', 'python -m PyInstaller GitDTL.spec');
-  setLine('gdtl_3', 'Executable attendu :');
-  setLine('gdtl_4', '{GDTL}\\dist\\GitDTL.exe');
+  setLine('gdtl_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{GDTL}" GitDTL');
+  setLine('gdtl_3', 'python -m PyInstaller GitDTL.spec');
+  setLine('gdtl_4', 'Executable attendu :');
+  setLine('gdtl_5', '{GDTL}\\dist\\GitDTL.exe');
 
   setLine('ghm_1', 'cd /d "{GHM}"');
-  setLine('ghm_2', 'python -m PyInstaller GitHubMenu.spec');
-  setLine('ghm_3', 'Executable attendu :');
-  setLine('ghm_4', '{GHM}\\dist\\GitHubMenu.exe');
+  setLine('ghm_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{GHM}" GitHubMenu');
+  setLine('ghm_3', 'python -m PyInstaller GitHubMenu.spec');
+  setLine('ghm_4', 'Executable attendu :');
+  setLine('ghm_5', '{GHM}\\dist\\GitHubMenu.exe');
 
   setLine('all_1',  'cd /d "{DKW}"');
-  setLine('all_2',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
-  setLine('all_3',  'python -m PyInstaller DTLknowsWhy.spec');
-  setLine('all_4',  'python -m PyInstaller DTLknowsWhy-CLI.spec');
-  setLine('all_5',  'cd /d "{DKW}\\agent"');
-  setLine('all_6',  'python -m PyInstaller --distpath "..\\dist" --workpath "..\\build\\DTLknowsWhy-Agent" DTLknowsWhy-Agent.spec');
-  setLine('all_7',  'cd /d "{DSW}"');
-  setLine('all_8',  'python -c "import wmi, psutil; print(\'Dependances DTLsaysWhat OK\')"');
-  setLine('all_9',  'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
-  setLine('all_10', 'cd /d "{GDTL}"');
-  setLine('all_11', 'python -m PyInstaller GitDTL.spec');
-  setLine('all_12', 'cd /d "{GHM}"');
-  setLine('all_13', 'python -m PyInstaller GitHubMenu.spec');
-  setLine('all_14', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL et GitHubMenu.');
+  setLine('all_2',  'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DKW}" DTLknowsWhy');
+  setLine('all_3',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
+  setLine('all_4',  'python -m PyInstaller DTLknowsWhy.spec');
+  setLine('all_5',  'python -m PyInstaller DTLknowsWhy-CLI.spec');
+  setLine('all_6',  'cd /d "{DKW}\\agent"');
+  setLine('all_7',  'python -m PyInstaller --distpath "..\\dist" --workpath "..\\build\\DTLknowsWhy-Agent" DTLknowsWhy-Agent.spec');
+  setLine('all_8',  'cd /d "{DSW}"');
+  setLine('all_9',  'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DSW}" DTLsaysWhat');
+  setLine('all_10', 'python -c "import wmi, psutil; print(\'Dependances DTLsaysWhat OK\')"');
+  setLine('all_11', 'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
+  setLine('all_12', 'cd /d "{GDTL}"');
+  setLine('all_13', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{GDTL}" GitDTL');
+  setLine('all_14', 'python -m PyInstaller GitDTL.spec');
+  setLine('all_15', 'cd /d "{GHM}"');
+  setLine('all_16', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{GHM}" GitHubMenu');
+  setLine('all_17', 'python -m PyInstaller GitHubMenu.spec');
+  setLine('all_18', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL et GitHubMenu.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
@@ -567,6 +583,9 @@ function buildScript(blockId, title) {
     } else if (cls === 'dtl-cmd-echo') {
       lines.push('echo ' + t);
     } else if (cls === 'dtl-cmd-line') {
+      if (t.indexOf('DTLversion.py" begin ') >= 0) {
+        lines.push('set "DTL_ROLLBACK=' + t.replace(' begin ', ' rollback ') + '"');
+      }
       lines.push(t);
       if (t.indexOf('python') === 0) {
         lines.push('if errorlevel 1 goto :error');
@@ -578,6 +597,8 @@ function buildScript(blockId, title) {
   lines.push('echo Operation terminee.');
   lines.push('goto :end');
   lines.push(':error');
+  lines.push('if defined DTL_ROLLBACK call %DTL_ROLLBACK%');
+  lines.push('set "DTL_ROLLBACK="');
   lines.push('echo.');
   lines.push('echo ERREUR : la derniere commande a echoue.');
   lines.push(':end');
