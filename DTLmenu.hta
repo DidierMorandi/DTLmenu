@@ -245,22 +245,27 @@
           GitDTL <span class="dtl-tag dtl-tag-py">Python</span>
           <span class="dtl-btn-sub">Tkinter GUI</span>
         </button>
+        <button class="dtl-btn" onclick="show('githubmenu')">
+          <span class="dtl-btn-num">5</span>&nbsp;
+          GitHubMenu <span class="dtl-tag dtl-tag-py">Python</span>
+          <span class="dtl-btn-sub">Tkinter GUI</span>
+        </button>
       </div>
 
       <span class="dtl-section-label">Actions globales</span>
       <div class="dtl-grid3-wrap">
         <button class="dtl-btn" onclick="show('all')">
-          <span class="dtl-btn-num">5</span>&nbsp;
+          <span class="dtl-btn-num">6</span>&nbsp;
           Tous les outils Python
           <span class="dtl-btn-sub">Build complet</span>
         </button>
         <button class="dtl-btn" onclick="show('folders')">
-          <span class="dtl-btn-num">6</span>&nbsp;
+          <span class="dtl-btn-num">7</span>&nbsp;
           Ouvrir un dossier
           <span class="dtl-btn-sub">Chemins dist\</span>
         </button>
         <button class="dtl-btn" onclick="show('pyinstaller')">
-          <span class="dtl-btn-num">7</span>&nbsp;
+          <span class="dtl-btn-num">8</span>&nbsp;
           Verifier PyInstaller
           <span class="dtl-btn-sub">Environnement</span>
         </button>
@@ -350,6 +355,25 @@
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
     </div>
 
+    <!-- GitHubMenu -->
+    <div id="screen-githubmenu" class="screen">
+      <p class="dtl-header">Compilation GitHubMenu</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-ghm','Compilation GitHubMenu')">&#9654; executer</button>
+          GitHubMenu.exe
+        </div>
+        <div id="blk-ghm">
+          <span class="dtl-cmd-line" id="ghm_1"></span>
+          <span class="dtl-cmd-line" id="ghm_2"></span>
+          <span class="dtl-cmd-echo" id="ghm_3"></span>
+          <span class="dtl-cmd-echo" id="ghm_4"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
     <!-- Build all -->
     <div id="screen-all" class="screen">
       <p class="dtl-header">Compilation complete &mdash; outils Python DTL</p>
@@ -357,7 +381,7 @@
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
           <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; executer</button>
-          DTLknowsWhy + DTLsaysWhat + GitDTL
+          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu
         </div>
         <div id="blk-all">
           <span class="dtl-cmd-comment">--- DTLknowsWhy ---</span>
@@ -374,7 +398,10 @@
           <span class="dtl-cmd-comment">--- GitDTL ---</span>
           <span class="dtl-cmd-line" id="all_10"></span>
           <span class="dtl-cmd-line" id="all_11"></span>
-          <span class="dtl-cmd-echo" id="all_12"></span>
+          <span class="dtl-cmd-comment">--- GitHubMenu ---</span>
+          <span class="dtl-cmd-line" id="all_12"></span>
+          <span class="dtl-cmd-line" id="all_13"></span>
+          <span class="dtl-cmd-echo" id="all_14"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -388,7 +415,8 @@
         <div class="dtl-info-line"><span class="key">1 </span><span class="ipath" id="f-dkw"></span> <button class="dtl-folder-btn" onclick="openFolder('dkw')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">2 </span><span class="ipath" id="f-dsw"></span> <button class="dtl-folder-btn" onclick="openFolder('dsw')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">3 </span><span class="ipath" id="f-gdtl"></span> <button class="dtl-folder-btn" onclick="openFolder('gdtl')">ouvrir</button></div>
-        <div class="dtl-info-line"><span class="key">4 </span><span class="ipath" id="f-root"></span> <button class="dtl-folder-btn" onclick="openFolder('root')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">4 </span><span class="ipath" id="f-ghm"></span> <button class="dtl-folder-btn" onclick="openFolder('ghm')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">5 </span><span class="ipath" id="f-root"></span> <button class="dtl-folder-btn" onclick="openFolder('root')">ouvrir</button></div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
     </div>
@@ -424,7 +452,8 @@ function getPaths() {
     DKW:   root + '\\DTLKnowsWhy',
     DSW:   root + '\\DTLsaysWhat',
     NET:   root + '\\NetDTL',
-    GDTL:  root + '\\GitDTL'
+    GDTL:  root + '\\GitDTL',
+    GHM:   root + '\\GitHubMenu'
   };
 }
 
@@ -435,6 +464,7 @@ function R(s) {
   s = s.replace(/\{DSW\}/g,   p.DSW);
   s = s.replace(/\{NET\}/g,   p.NET);
   s = s.replace(/\{GDTL\}/g,  p.GDTL);
+  s = s.replace(/\{GHM\}/g,   p.GHM);
   return s;
 }
 
@@ -468,6 +498,11 @@ function renderAll() {
   setLine('gdtl_3', 'Executable attendu :');
   setLine('gdtl_4', '{GDTL}\\dist\\GitDTL.exe');
 
+  setLine('ghm_1', 'cd /d "{GHM}"');
+  setLine('ghm_2', 'python -m PyInstaller GitHubMenu.spec');
+  setLine('ghm_3', 'Executable attendu :');
+  setLine('ghm_4', '{GHM}\\dist\\GitHubMenu.exe');
+
   setLine('all_1',  'cd /d "{DKW}"');
   setLine('all_2',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
   setLine('all_3',  'python -m PyInstaller DTLknowsWhy.spec');
@@ -479,7 +514,9 @@ function renderAll() {
   setLine('all_9',  'python -m PyInstaller --onefile --console --name DTLsaysWhat DTLsaysWhat.py');
   setLine('all_10', 'cd /d "{GDTL}"');
   setLine('all_11', 'python -m PyInstaller GitDTL.spec');
-  setLine('all_12', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat et GitDTL.');
+  setLine('all_12', 'cd /d "{GHM}"');
+  setLine('all_13', 'python -m PyInstaller GitHubMenu.spec');
+  setLine('all_14', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL et GitHubMenu.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
@@ -490,6 +527,7 @@ function renderAll() {
   document.getElementById('f-dkw').innerText   = p.DKW  + '\\dist';
   document.getElementById('f-dsw').innerText   = p.DSW  + '\\dist';
   document.getElementById('f-gdtl').innerText  = p.GDTL + '\\dist';
+  document.getElementById('f-ghm').innerText   = p.GHM  + '\\dist';
   document.getElementById('f-root').innerText  = p.ROOT;
 }
 
@@ -563,7 +601,7 @@ function runBlock(blockId, title) {
 
 function openFolder(key) {
   var p = getPaths();
-  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', root: p.ROOT };
+  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', ghm: p.GHM + '\\dist', root: p.ROOT };
   var path = dirs[key];
   if (!path) return;
   var fso = new ActiveXObject('Scripting.FileSystemObject');
