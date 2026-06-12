@@ -9,7 +9,7 @@ DTLmenu is a Windows HTML Application (`.hta`) that replaces a plain VBScript me
 
 ## Overview
 
-The NetDTL Suite consists of five tools:
+The NetDTL Suite consists of six tools:
 
 | Tool | Stack | Build method |
 |------|-------|--------------|
@@ -17,6 +17,7 @@ The NetDTL Suite consists of five tools:
 | DTLsaysWhat | Python | PyInstaller `--onefile` |
 | GitDTL | Python / Tkinter | PyInstaller `.spec` file |
 | GitHubMenu | Python / Tkinter | PyInstaller `.spec` file |
+| DTLaudit | Python | PyInstaller `--onefile` |
 | NetDTL | PHP / MySQL | No build required |
 
 DTLmenu covers all of them from a single window.
@@ -48,7 +49,7 @@ Double-click `DTLmenu.hta`. Windows will open it with `mshta.exe`.
 
 ### Setting the root directory
 
-At the top of the window, set `ROOT_DIR` to the folder that contains the five tool subdirectories (`DTLKnowsWhy`, `DTLsaysWhat`, `NetDTL`, `GitDTL`, `GitHubMenu`). Click **apply** to propagate the path to all screens.
+At the top of the window, set `ROOT_DIR` to the folder that contains the six tool subdirectories (`DTLKnowsWhy`, `DTLsaysWhat`, `NetDTL`, `GitDTL`, `GitHubMenu`, `DTLaudit`). Click **apply** to propagate the path to all screens.
 
 The default value matches the original development path:
 
@@ -67,9 +68,10 @@ Change it once to match your local layout.
 | 3 | NetDTL — display path information (no build needed) |
 | 4 | Build GitDTL |
 | 5 | Build GitHubMenu |
-| 6 | Build all Python tools in sequence |
-| 7 | Open a `dist\` output folder in Windows Explorer |
-| 8 | Verify Python and PyInstaller versions |
+| 6 | Build DTLaudit |
+| 7 | Build all Python tools in sequence |
+| 8 | Open a `dist\` output folder in Windows Explorer |
+| 9 | Verify Python and PyInstaller versions |
 | 0 | Quit |
 
 ### How builds are executed
@@ -114,6 +116,9 @@ outils\
 ├── GitHubMenu\
 │   ├── GitHubMenu.spec
 │   ├── GitHubMenu.py
+│   └── dist\
+├── DTLaudit\
+│   ├── DTLaudit.py
 │   └── dist\
 └── NetDTL\
 ```

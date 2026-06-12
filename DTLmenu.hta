@@ -250,22 +250,27 @@
           GitHubMenu <span class="dtl-tag dtl-tag-py">Python</span>
           <span class="dtl-btn-sub">Tkinter GUI</span>
         </button>
+        <button class="dtl-btn" onclick="show('dtlaudit')">
+          <span class="dtl-btn-num">6</span>&nbsp;
+          DTLaudit <span class="dtl-tag dtl-tag-py">Python</span>
+          <span class="dtl-btn-sub">onefile console</span>
+        </button>
       </div>
 
       <span class="dtl-section-label">Actions globales</span>
       <div class="dtl-grid3-wrap">
         <button class="dtl-btn" onclick="show('all')">
-          <span class="dtl-btn-num">6</span>&nbsp;
+          <span class="dtl-btn-num">7</span>&nbsp;
           Tous les outils Python
           <span class="dtl-btn-sub">Build complet</span>
         </button>
         <button class="dtl-btn" onclick="show('folders')">
-          <span class="dtl-btn-num">7</span>&nbsp;
+          <span class="dtl-btn-num">8</span>&nbsp;
           Ouvrir un dossier
           <span class="dtl-btn-sub">Chemins dist\</span>
         </button>
         <button class="dtl-btn" onclick="show('pyinstaller')">
-          <span class="dtl-btn-num">8</span>&nbsp;
+          <span class="dtl-btn-num">9</span>&nbsp;
           Verifier PyInstaller
           <span class="dtl-btn-sub">Environnement</span>
         </button>
@@ -378,6 +383,26 @@
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
     </div>
 
+    <!-- DTLaudit -->
+    <div id="screen-dtlaudit" class="screen">
+      <p class="dtl-header">Compilation DTLaudit</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-dta','Compilation DTLaudit')">&#9654; executer</button>
+          DTLaudit.exe
+        </div>
+        <div id="blk-dta">
+          <span class="dtl-cmd-line" id="dta_1"></span>
+          <span class="dtl-cmd-line" id="dta_2"></span>
+          <span class="dtl-cmd-line" id="dta_3"></span>
+          <span class="dtl-cmd-echo" id="dta_4"></span>
+          <span class="dtl-cmd-echo" id="dta_5"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
     <!-- Build all -->
     <div id="screen-all" class="screen">
       <p class="dtl-header">Compilation complete &mdash; outils Python DTL</p>
@@ -385,7 +410,7 @@
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
           <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; executer</button>
-          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu
+          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu + DTLaudit
         </div>
         <div id="blk-all">
           <span class="dtl-cmd-comment">--- DTLknowsWhy ---</span>
@@ -400,16 +425,20 @@
           <span class="dtl-cmd-line" id="all_8"></span>
           <span class="dtl-cmd-line" id="all_9"></span>
           <span class="dtl-cmd-line" id="all_10"></span>
-          <span class="dtl-cmd-comment">--- GitDTL ---</span>
           <span class="dtl-cmd-line" id="all_11"></span>
+          <span class="dtl-cmd-comment">--- GitDTL ---</span>
           <span class="dtl-cmd-line" id="all_12"></span>
-          <span class="dtl-cmd-comment">--- GitHubMenu ---</span>
           <span class="dtl-cmd-line" id="all_13"></span>
           <span class="dtl-cmd-line" id="all_14"></span>
+          <span class="dtl-cmd-comment">--- GitHubMenu ---</span>
           <span class="dtl-cmd-line" id="all_15"></span>
           <span class="dtl-cmd-line" id="all_16"></span>
           <span class="dtl-cmd-line" id="all_17"></span>
-          <span class="dtl-cmd-echo" id="all_18"></span>
+          <span class="dtl-cmd-comment">--- DTLaudit ---</span>
+          <span class="dtl-cmd-line" id="all_18"></span>
+          <span class="dtl-cmd-line" id="all_19"></span>
+          <span class="dtl-cmd-line" id="all_20"></span>
+          <span class="dtl-cmd-echo" id="all_21"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -424,7 +453,8 @@
         <div class="dtl-info-line"><span class="key">2 </span><span class="ipath" id="f-dsw"></span> <button class="dtl-folder-btn" onclick="openFolder('dsw')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">3 </span><span class="ipath" id="f-gdtl"></span> <button class="dtl-folder-btn" onclick="openFolder('gdtl')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">4 </span><span class="ipath" id="f-ghm"></span> <button class="dtl-folder-btn" onclick="openFolder('ghm')">ouvrir</button></div>
-        <div class="dtl-info-line"><span class="key">5 </span><span class="ipath" id="f-root"></span> <button class="dtl-folder-btn" onclick="openFolder('root')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">5 </span><span class="ipath" id="f-dta"></span> <button class="dtl-folder-btn" onclick="openFolder('dta')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">6 </span><span class="ipath" id="f-root"></span> <button class="dtl-folder-btn" onclick="openFolder('root')">ouvrir</button></div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
     </div>
@@ -461,7 +491,8 @@ function getPaths() {
     DSW:   root + '\\DTLsaysWhat',
     NET:   root + '\\NetDTL',
     GDTL:  root + '\\GitDTL',
-    GHM:   root + '\\GitHubMenu'
+    GHM:   root + '\\GitHubMenu',
+    DTA:   root + '\\DTLaudit'
   };
 }
 
@@ -473,6 +504,7 @@ function R(s) {
   s = s.replace(/\{NET\}/g,   p.NET);
   s = s.replace(/\{GDTL\}/g,  p.GDTL);
   s = s.replace(/\{GHM\}/g,   p.GHM);
+  s = s.replace(/\{DTA\}/g,   p.DTA);
   return s;
 }
 
@@ -515,6 +547,12 @@ function renderAll() {
   setLine('ghm_4', 'Executable attendu :');
   setLine('ghm_5', '{GHM}\\dist\\GitHubMenu.exe');
 
+  setLine('dta_1', 'cd /d "{DTA}"');
+  setLine('dta_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTA}" DTLaudit');
+  setLine('dta_3', 'python -m PyInstaller --onefile --console --name DTLaudit DTLaudit.py');
+  setLine('dta_4', 'Executable attendu :');
+  setLine('dta_5', '{DTA}\\dist\\DTLaudit.exe');
+
   setLine('all_1',  'cd /d "{DKW}"');
   setLine('all_2',  'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DKW}" DTLknowsWhy');
   setLine('all_3',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
@@ -532,7 +570,10 @@ function renderAll() {
   setLine('all_15', 'cd /d "{GHM}"');
   setLine('all_16', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{GHM}" GitHubMenu');
   setLine('all_17', 'python -m PyInstaller GitHubMenu.spec');
-  setLine('all_18', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL et GitHubMenu.');
+  setLine('all_18', 'cd /d "{DTA}"');
+  setLine('all_19', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTA}" DTLaudit');
+  setLine('all_20', 'python -m PyInstaller --onefile --console --name DTLaudit DTLaudit.py');
+  setLine('all_21', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu et DTLaudit.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
@@ -544,6 +585,7 @@ function renderAll() {
   document.getElementById('f-dsw').innerText   = p.DSW  + '\\dist';
   document.getElementById('f-gdtl').innerText  = p.GDTL + '\\dist';
   document.getElementById('f-ghm').innerText   = p.GHM  + '\\dist';
+  document.getElementById('f-dta').innerText   = p.DTA  + '\\dist';
   document.getElementById('f-root').innerText  = p.ROOT;
 }
 
@@ -622,7 +664,7 @@ function runBlock(blockId, title) {
 
 function openFolder(key) {
   var p = getPaths();
-  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', ghm: p.GHM + '\\dist', root: p.ROOT };
+  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', ghm: p.GHM + '\\dist', dta: p.DTA + '\\dist', root: p.ROOT };
   var path = dirs[key];
   if (!path) return;
   var fso = new ActiveXObject('Scripting.FileSystemObject');
