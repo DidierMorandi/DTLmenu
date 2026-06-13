@@ -213,8 +213,11 @@
 
     <div class="dtl-config">
       <label>ROOT_DIR&nbsp;&nbsp;</label>
-      <input type="text" id="root-dir" value="C:\Users\Utilisateur\Documents\Mes sites Web\Secours catholique\outils">
+      <input type="text" id="root-dir" value="">
       <button class="dtl-config-btn" onclick="applyRoot()">appliquer</button>
+      <button class="dtl-config-btn" onclick="chooseRoot()">parcourir</button>
+      <div class="dtl-info-line" id="root-status"></div>
+      <div class="dtl-info-line" id="pyinstaller-status"></div>
     </div>
 
     <!-- MAIN MENU -->
@@ -483,8 +486,239 @@
 
 <script language="JScript">
 
+var REQUIRED_TOOLS = ['DTLKnowsWhy', 'DTLsaysWhat', 'GitDTL', 'GitHubMenu', 'DTLaudit'];
+
+function getFso() {
+  return new ActiveXObject('Scripting.FileSystemObject');
+}
+
+function getShell() {
+  return new ActiveXObject('WScript.Shell');
+}
+
+function trimSlash(path) {
+  while (path.length > 0 && (path.charAt(path.length - 1) === '\\' || path.charAt(path.length - 1) === '/')) {
+    path = path.substring(0, path.length - 1);
+  }
+  return path;
+}
+
+function normalizePath(path) {
+  path = path.replace(/\//g, '\\');
+  return trimSlash(path);
+}
+
+function getAppFolder() {
+  var fso = getFso();
+  var path = unescape(location.pathname);
+  path = path.replace(/\//g, '\\');
+  if (path.charAt(0) === '\\' && path.charAt(2) === ':') {
+    path = path.substring(1);
+  }
+  return fso.GetParentFolderName(path);
+}
+
+function getConfigPath() {
+  return getAppFolder() + '\\DTLmenu.root';
+}
+
+function loadSavedRoot() {
+  var fso = getFso();
+  var cfg = getConfigPath();
+  if (!fso.FileExists(cfg)) return '';
+  var file = fso.OpenTextFile(cfg, 1, false, -1);
+  var value = file.ReadAll();
+  file.Close();
+  return normalizePath(value.replace(/^\s+|\s+$/g, ''));
+}
+
+function saveRoot(root) {
+  var fso = getFso();
+  var file = fso.CreateTextFile(getConfigPath(), true, true);
+  file.Write(root);
+  file.Close();
+}
+
+function guessRootFromAppFolder() {
+  var fso = getFso();
+  var appFolder = getAppFolder();
+  if (LCaseName(appFolder) === 'dtlmenu') {
+    return fso.GetParentFolderName(appFolder);
+  }
+  return appFolder;
+}
+
+function LCaseName(path) {
+  var fso = getFso();
+  return fso.GetFileName(path).toLowerCase();
+}
+
+function missingRequiredTools(root) {
+  var fso = getFso();
+  var missing = [];
+  if (!root || !fso.FolderExists(root)) {
+    return ['dossier outils'];
+  }
+  for (var i = 0; i < REQUIRED_TOOLS.length; i++) {
+    if (!fso.FolderExists(root + '\\' + REQUIRED_TOOLS[i])) {
+      missing.push(REQUIRED_TOOLS[i]);
+    }
+  }
+  return missing;
+}
+
+function isValidRoot(root) {
+  return missingRequiredTools(root).length === 0;
+}
+
+function setRootStatus(text, ok) {
+  var el = document.getElementById('root-status');
+  if (!el) return;
+  el.style.color = ok ? '#00ff00' : '#ffbd2e';
+  el.innerText = text;
+}
+
+function setPyInstallerStatus(text, ok) {
+  var el = document.getElementById('pyinstaller-status');
+  if (!el) return;
+  el.style.color = ok ? '#00ff00' : '#ffbd2e';
+  el.innerText = text;
+}
+
+function commandSucceeds(commandLine) {
+  var shell = getShell();
+  var cmd = shell.ExpandEnvironmentStrings('%ComSpec%') + ' /c "' + commandLine + ' >nul 2>&1"';
+  return shell.Run(cmd, 0, true) === 0;
+}
+
+function isPythonInstalled() {
+  return commandSucceeds('python --version');
+}
+
+function isPyInstallerInstalled() {
+  return commandSucceeds('python -m PyInstaller --version');
+}
+
+function runTempScript(scriptName, lines) {
+  var fso = getFso();
+  var shell = getShell();
+  var tmp = shell.ExpandEnvironmentStrings('%TEMP%');
+  var path = tmp + '\\' + scriptName;
+  var file = fso.CreateTextFile(path, true, false);
+  file.Write(lines.join('\r\n'));
+  file.Close();
+  shell.Run('"' + path + '"', 1, false);
+}
+
+function offerPythonInstall() {
+  var answer = confirm('Python est introuvable.\n\nVoulez-vous lancer son installation avec winget ?\n\nCommande : winget install --id Python.Python.3.12 -e --source winget');
+  if (!answer) return false;
+  runTempScript('DTLmenu_install_python.cmd', [
+    '@echo off',
+    'chcp 65001 >nul',
+    'title Installation Python',
+    'echo Installation de Python avec winget',
+    'echo ================================================================',
+    'winget install --id Python.Python.3.12 -e --source winget',
+    'echo.',
+    'echo Si Python vient d etre installe, fermez puis relancez DTLmenu.',
+    'echo.',
+    'pause'
+  ]);
+  return false;
+}
+
+function offerPyInstallerInstall() {
+  var answer = confirm('PyInstaller est introuvable.\n\nVoulez-vous l installer maintenant ?\n\nCommande : python -m pip install --upgrade pyinstaller');
+  if (!answer) return false;
+  runTempScript('DTLmenu_install_pyinstaller.cmd', [
+    '@echo off',
+    'chcp 65001 >nul',
+    'title Installation PyInstaller',
+    'echo Installation de PyInstaller',
+    'echo ================================================================',
+    'python -m pip install --upgrade pip',
+    'python -m pip install --upgrade pyinstaller',
+    'echo.',
+    'python -m PyInstaller --version',
+    'echo.',
+    'echo Si une version s affiche ci-dessus, PyInstaller est installe.',
+    'echo Vous pouvez relancer la compilation dans DTLmenu.',
+    'echo.',
+    'pause'
+  ]);
+  return false;
+}
+
+function ensurePyInstaller() {
+  if (!isPythonInstalled()) {
+    setPyInstallerStatus('Python introuvable.');
+    return offerPythonInstall();
+  }
+  if (isPyInstallerInstalled()) {
+    setPyInstallerStatus('PyInstaller disponible.', true);
+    return true;
+  }
+  setPyInstallerStatus('PyInstaller introuvable.', false);
+  return offerPyInstallerInstall();
+}
+
+function browseForRoot(message) {
+  var shellApp = new ActiveXObject('Shell.Application');
+  var folder = shellApp.BrowseForFolder(0, message, 0, 0);
+  if (!folder) return '';
+  return normalizePath(folder.Self.Path);
+}
+
+function chooseRoot() {
+  var root = browseForRoot('Selectionnez le dossier outils qui contient DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu et DTLaudit.');
+  if (!root) return false;
+  document.getElementById('root-dir').value = root;
+  return applyRoot();
+}
+
+function ensureValidRoot() {
+  var input = document.getElementById('root-dir');
+  var candidates = [loadSavedRoot(), guessRootFromAppFolder(), input.value];
+  var root = '';
+
+  for (var i = 0; i < candidates.length; i++) {
+    if (candidates[i] && isValidRoot(candidates[i])) {
+      root = normalizePath(candidates[i]);
+      break;
+    }
+  }
+
+  while (!root) {
+    var tried = normalizePath(input.value || candidates[1] || '');
+    var missing = missingRequiredTools(tried);
+    var msg = 'Le dossier outils est introuvable ou incomplet.';
+    if (tried) msg += '\n\nChemin teste :\n' + tried;
+    msg += '\n\nElements manquants : ' + missing.join(', ');
+    msg += '\n\nSelectionnez le dossier outils.';
+    root = browseForRoot(msg);
+    if (!root) {
+      input.value = tried;
+      setRootStatus('Dossier outils non configure.', false);
+      renderAll();
+      return false;
+    }
+    if (!isValidRoot(root)) {
+      alert('Ce dossier ne contient pas tous les outils a reconstruire :\n\n' + missingRequiredTools(root).join('\n'));
+      root = '';
+    }
+  }
+
+  input.value = root;
+  saveRoot(root);
+  setRootStatus('Dossier outils valide : ' + root, true);
+  renderAll();
+  return true;
+}
+
 function getPaths() {
   var root = document.getElementById('root-dir').value;
+  root = normalizePath(root);
   return {
     ROOT:  root,
     DKW:   root + '\\DTLKnowsWhy',
@@ -549,7 +783,7 @@ function renderAll() {
 
   setLine('dta_1', 'cd /d "{DTA}"');
   setLine('dta_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTA}" DTLaudit');
-  setLine('dta_3', 'python -m PyInstaller --onefile --console --name DTLaudit DTLaudit.py');
+  setLine('dta_3', 'python -m PyInstaller --onefile --noconsole --name DTLaudit DTLaudit.py');
   setLine('dta_4', 'Executable attendu :');
   setLine('dta_5', '{DTA}\\dist\\DTLaudit.exe');
 
@@ -572,13 +806,13 @@ function renderAll() {
   setLine('all_17', 'python -m PyInstaller GitHubMenu.spec');
   setLine('all_18', 'cd /d "{DTA}"');
   setLine('all_19', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTA}" DTLaudit');
-  setLine('all_20', 'python -m PyInstaller --onefile --console --name DTLaudit DTLaudit.py');
+  setLine('all_20', 'python -m PyInstaller --onefile --noconsole --name DTLaudit DTLaudit.py');
   setLine('all_21', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu et DTLaudit.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
   setLine('pyi_3', 'python -m PyInstaller --version');
-  setLine('pyi_4', 'Si une version PyInstaller s\'affiche, l\'environnement est pret.');
+  setLine('pyi_4', 'Si PyInstaller manque, DTLmenu proposera : python -m pip install --upgrade pyinstaller');
 
   document.getElementById('netdtl-path').innerText = p.NET;
   document.getElementById('f-dkw').innerText   = p.DKW  + '\\dist';
@@ -589,7 +823,20 @@ function renderAll() {
   document.getElementById('f-root').innerText  = p.ROOT;
 }
 
-function applyRoot() { renderAll(); }
+function applyRoot() {
+  var root = normalizePath(document.getElementById('root-dir').value);
+  document.getElementById('root-dir').value = root;
+  var missing = missingRequiredTools(root);
+  if (missing.length > 0) {
+    setRootStatus('Dossier outils incomplet : ' + missing.join(', '), false);
+    alert('Impossible de valider ce dossier outils.\n\nElements manquants :\n' + missing.join('\n'));
+    return false;
+  }
+  saveRoot(root);
+  setRootStatus('Dossier outils valide : ' + root, true);
+  renderAll();
+  return true;
+}
 
 function show(id) {
   var all = document.body.getElementsByTagName('div');
@@ -650,10 +897,12 @@ function buildScript(blockId, title) {
 }
 
 function runBlock(blockId, title) {
+  if (!ensureValidRoot()) return;
+  if (!ensurePyInstaller()) return;
   var script = buildScript(blockId, title);
   if (!script) return;
-  var fso   = new ActiveXObject('Scripting.FileSystemObject');
-  var shell = new ActiveXObject('WScript.Shell');
+  var fso   = getFso();
+  var shell = getShell();
   var tmp   = shell.ExpandEnvironmentStrings('%TEMP%');
   var path  = tmp + '\\DTLmenu_run.cmd';
   var f = fso.CreateTextFile(path, true, false);
@@ -663,20 +912,23 @@ function runBlock(blockId, title) {
 }
 
 function openFolder(key) {
+  if (!ensureValidRoot()) return;
   var p = getPaths();
   var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', ghm: p.GHM + '\\dist', dta: p.DTA + '\\dist', root: p.ROOT };
   var path = dirs[key];
   if (!path) return;
-  var fso = new ActiveXObject('Scripting.FileSystemObject');
+  var fso = getFso();
   if (fso.FolderExists(path)) {
-    var shell = new ActiveXObject('WScript.Shell');
+    var shell = getShell();
     shell.Run('explorer.exe "' + path + '"', 1, false);
   } else {
     alert('Dossier introuvable :\n' + path);
   }
 }
 
-renderAll();
+if (ensureValidRoot()) {
+  ensurePyInstaller();
+}
 </script>
 </body>
 </html>
