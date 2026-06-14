@@ -138,3 +138,18 @@ The UI uses only IE-compatible CSS (no `flexbox`, no `grid`) to match the render
 MIT — see the main NetDTL repository for the full license text.
 
 Part of the **NetDTL Suite** — [didiermorandi.com/netdtl](https://didiermorandi.com/netdtl)
+
+## Update - 14 June 2026
+
+`DTLmenu.hta` has become a complete HTA launcher for the NetDTL Suite.
+
+New and confirmed behavior:
+
+- The suite root directory is saved in `DTLmenu.root`.
+- The folder picker can correct the root path without editing the HTA file.
+- The menu checks for Python and PyInstaller before running a build.
+- If PyInstaller is missing, the tool offers to install it with `python -m pip install --upgrade pyinstaller`.
+- Covered builds are `DTLknowsWhy`, `DTLsaysWhat`, `GitDTL`, `GitHubMenu`, and `DTLaudit`.
+- DTLknowsWhy builds produce the GUI, CLI, and Agent variants.
+- `DTLversion.py` is called before builds to manage versioning, with rollback support in the generated temporary script.
+- `DTLGitMorning.ps1` also provides a morning Git summary for the suite repositories.
