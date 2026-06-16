@@ -54,7 +54,7 @@ At the top of the window, set `ROOT_DIR` to the folder that contains the six too
 The default value matches the original development path:
 
 ```
-C:\Users\Utilisateur\Documents\Mes sites Web\Secours catholique\outils
+C:\Users\Utilisateur\Documents\Mes sites Web\\outils
 ```
 
 Change it once to match your local layout.
