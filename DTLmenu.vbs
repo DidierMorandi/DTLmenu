@@ -29,8 +29,8 @@ Sub MainMenu()
             "3 - NetDTL : information seulement" & vbCrLf & _
             "4 - Reconstruire GitDTL" & vbCrLf & vbCrLf & _
             "5 - Reconstruire les outils Python" & vbCrLf & _
-            "6 - Ouvrir un dossier d'executables" & vbCrLf & _
-            "7 - Verifier PyInstaller" & vbCrLf & vbCrLf & _
+            "6 - Ouvrir un dossier d'exécutables" & vbCrLf & _
+            "7 - Vérifier PyInstaller" & vbCrLf & vbCrLf & _
             "0 - Quitter", _
             "DTLmenu")
 
@@ -114,15 +114,15 @@ Sub BuildPythonTools()
         "cd /d " & Q(GITDTL_DIR), _
         "python -m PyInstaller GitDTL.spec", _
         "echo.", _
-        "echo Compilation terminee pour DTLKnowsWhy, DTLsaysWhat et GitDTL." _
+        "echo Compilation terminée pour DTLKnowsWhy, DTLsaysWhat et GitDTL." _
     )
 End Sub
 
 Sub ShowNetDTLInfo()
     MsgBox _
         "NetDTL est une application PHP/MySQL." & vbCrLf & vbCrLf & _
-        "Aucune reconstruction PyInstaller n'est necessaire." & vbCrLf & _
-        "Le produit est deja publie / release." & vbCrLf & vbCrLf & _
+        "Aucune reconstruction PyInstaller n'est nécessaire." & vbCrLf & _
+        "Le produit est déjà publié / release." & vbCrLf & vbCrLf & _
         "Dossier :" & vbCrLf & NETDTL_DIR, _
         vbInformation, _
         "NetDTL"
@@ -138,7 +138,7 @@ Sub OpenExecutableFolderMenu()
         "3 - GitDTL\dist" & vbCrLf & _
         "4 - Dossier outils" & vbCrLf & vbCrLf & _
         "0 - Retour", _
-        "Executables")
+        "Exécutables")
 
     choice = Trim(choice)
 
@@ -159,12 +159,12 @@ Sub OpenExecutableFolderMenu()
 End Sub
 
 Sub VerifyPyInstaller()
-    RunCommands "Verification PyInstaller", Array( _
+    RunCommands "Vérification PyInstaller", Array( _
         "cd /d " & Q(ROOT_DIR), _
         "python --version", _
         "python -m PyInstaller --version", _
         "echo.", _
-        "echo Si une version PyInstaller s'affiche, l'environnement est pret." _
+        "echo Si une version PyInstaller s'affiche, l'environnement est prêt." _
     )
 End Sub
 
@@ -199,11 +199,11 @@ Sub RunCommands(title, commands)
     Next
 
     file.WriteLine "echo."
-    file.WriteLine "echo Operation terminee."
+    file.WriteLine "echo Opération terminée."
     file.WriteLine "goto end"
     file.WriteLine ":error"
     file.WriteLine "echo."
-    file.WriteLine "echo ERREUR : la derniere commande a echoue."
+    file.WriteLine "echo ERREUR : la dernière commande a échoué."
     file.WriteLine ":end"
     file.WriteLine "echo."
     file.WriteLine "pause"

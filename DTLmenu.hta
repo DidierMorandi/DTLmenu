@@ -274,7 +274,7 @@
         </button>
         <button class="dtl-btn" onclick="show('pyinstaller')">
           <span class="dtl-btn-num">9</span>&nbsp;
-          Verifier PyInstaller
+          Vérifier PyInstaller
           <span class="dtl-btn-sub">Environnement</span>
         </button>
       </div>
@@ -292,7 +292,7 @@
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-dkw','Compilation DTLknowsWhy')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-dkw','Compilation DTLknowsWhy')">&#9654; exécuter</button>
           DTLknowsWhy.exe &bull; DTLknowsWhy-CLI.exe &bull; DTLknowsWhy-Agent.exe
         </div>
         <div id="blk-dkw">
@@ -318,7 +318,7 @@
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-dsw','Compilation DTLsaysWhat')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-dsw','Compilation DTLsaysWhat')">&#9654; exécuter</button>
           DTLsaysWhat.exe
         </div>
         <div id="blk-dsw">
@@ -340,7 +340,7 @@
       <div class="dtl-info-box">
         <div class="dtl-info-line"><span class="key">Type      </span> <span class="val">Application PHP / MySQL</span></div>
         <div class="dtl-info-line"><span class="key">Build     </span> <span class="val">Aucune compilation PyInstaller requise</span></div>
-        <div class="dtl-info-line"><span class="key">Statut    </span> <span class="val">Produit deja publie / release</span></div>
+        <div class="dtl-info-line"><span class="key">Statut    </span> <span class="val">Produit déjà publié / release</span></div>
         <div class="dtl-info-line"><span class="key">Dossier   </span> <span class="ipath" id="netdtl-path"></span></div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -352,7 +352,7 @@
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-gdtl','Compilation GitDTL')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-gdtl','Compilation GitDTL')">&#9654; exécuter</button>
           GitDTL.exe
         </div>
         <div id="blk-gdtl">
@@ -372,7 +372,7 @@
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-ghm','Compilation GitHubMenu')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-ghm','Compilation GitHubMenu')">&#9654; exécuter</button>
           GitHubMenu.exe
         </div>
         <div id="blk-ghm">
@@ -392,7 +392,7 @@
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-dta','Compilation DTLaudit')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-dta','Compilation DTLaudit')">&#9654; exécuter</button>
           DTLaudit.exe
         </div>
         <div id="blk-dta">
@@ -408,11 +408,11 @@
 
     <!-- Build all -->
     <div id="screen-all" class="screen">
-      <p class="dtl-header">Compilation complete &mdash; outils Python DTL</p>
+      <p class="dtl-header">Compilation complète &mdash; outils Python DTL</p>
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; exécuter</button>
           DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu + DTLaudit
         </div>
         <div id="blk-all">
@@ -449,7 +449,7 @@
 
     <!-- Folders -->
     <div id="screen-folders" class="screen">
-      <p class="dtl-header">Dossiers d'executables</p>
+      <p class="dtl-header">Dossiers d'exécutables</p>
       <hr class="dtl-sep">
       <div class="dtl-info-box">
         <div class="dtl-info-line"><span class="key">1 </span><span class="ipath" id="f-dkw"></span> <button class="dtl-folder-btn" onclick="openFolder('dkw')">ouvrir</button></div>
@@ -464,11 +464,11 @@
 
     <!-- PyInstaller -->
     <div id="screen-pyinstaller" class="screen">
-      <p class="dtl-header">Verification PyInstaller</p>
+      <p class="dtl-header">Vérification PyInstaller</p>
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-pyi','Verification PyInstaller')">&#9654; executer</button>
+          <button class="dtl-run-btn" onclick="runBlock('blk-pyi','Vérification PyInstaller')">&#9654; exécuter</button>
           Environnement Python / PyInstaller
         </div>
         <div id="blk-pyi">
@@ -621,7 +621,7 @@ function offerPythonInstall() {
     'echo ================================================================',
     'winget install --id Python.Python.3.12 -e --source winget',
     'echo.',
-    'echo Si Python vient d etre installe, fermez puis relancez DTLmenu.',
+    'echo Si Python vient d\'être installé, fermez puis relancez DTLmenu.',
     'echo.',
     'pause'
   ]);
@@ -629,7 +629,7 @@ function offerPythonInstall() {
 }
 
 function offerPyInstallerInstall() {
-  var answer = confirm('PyInstaller est introuvable.\n\nVoulez-vous l installer maintenant ?\n\nCommande : python -m pip install --upgrade pyinstaller');
+    var answer = confirm('PyInstaller est introuvable.\n\nVoulez-vous l\'installer maintenant ?\n\nCommande : python -m pip install --upgrade pyinstaller');
   if (!answer) return false;
   runTempScript('DTLmenu_install_pyinstaller.cmd', [
     '@echo off',
@@ -642,7 +642,7 @@ function offerPyInstallerInstall() {
     'echo.',
     'python -m PyInstaller --version',
     'echo.',
-    'echo Si une version s affiche ci-dessus, PyInstaller est installe.',
+    'echo Si une version s\'affiche ci-dessus, PyInstaller est installé.',
     'echo Vous pouvez relancer la compilation dans DTLmenu.',
     'echo.',
     'pause'
@@ -807,7 +807,7 @@ function renderAll() {
   setLine('all_18', 'cd /d "{DTA}"');
   setLine('all_19', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTA}" DTLaudit');
   setLine('all_20', 'python -m PyInstaller --onefile --noconsole --name DTLaudit DTLaudit.py');
-  setLine('all_21', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu et DTLaudit.');
+  setLine('all_21', 'Compilation terminée pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu et DTLaudit.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
@@ -883,13 +883,13 @@ function buildScript(blockId, title) {
   }
 
   lines.push('echo.');
-  lines.push('echo Operation terminee.');
+  lines.push('echo Opération terminée.');
   lines.push('goto :end');
   lines.push(':error');
   lines.push('if defined DTL_ROLLBACK call %DTL_ROLLBACK%');
   lines.push('set "DTL_ROLLBACK="');
   lines.push('echo.');
-  lines.push('echo ERREUR : la derniere commande a echoue.');
+  lines.push('echo ERREUR : la dernière commande a échoué.');
   lines.push(':end');
   lines.push('echo.');
   lines.push('pause');
