@@ -1,103 +1,121 @@
 # DTLmenu
 
-**Lanceur graphique de compilation pour la suite NetDTL - application Windows HTA**
+**Lanceur graphique de compilation pour la suite d'outils DTL - application Windows HTA**
 
-v 1.0.0 - 11 juin 2026 - Didier DTL Morandi - https://didiermorandi.com/netdtl/
+Version : 1.0.0  
+Site : [netdtl.com](https://netdtl.com)
 
-DTLmenu est une application Windows HTML Application (`.hta`) qui remplace un menu VBScript classique par une interface graphique sombre de style terminal. Elle permet de lancer les builds PyInstaller de chaque outil Python de la suite NetDTL en un clic, d'ouvrir les dossiers de sortie dans l'Explorateur et de vérifier l'environnement Python sans passer manuellement par la ligne de commande.
+DTLmenu est une application Windows HTML Application (`.hta`) utilisée pour compiler les outils Python de la suite DTL depuis une interface graphique locale. Elle prépare les commandes PyInstaller, écrit un script `.cmd` temporaire, le lance dans une fenêtre de commandes visible et permet d'ouvrir les dossiers de sortie.
 
----
+## Position actuelle
 
-## Présentation
+`DTLmenu.hta` est le lanceur principal.
 
-La suite NetDTL comprend six outils :
+`DTLmenu.vbs` est désormais considéré comme legacy. Microsoft a annoncé la dépréciation de VBScript : les nouveaux usages et la maintenance doivent donc viser le lanceur HTA, puis à terme un remplaçant Python/Tkinter.
+
+## Outils couverts
 
 | Outil | Stack | Méthode de build |
-|------|-------|------------------|
-| DTLknowsWhy | Python (+ CLI + Agent) | Fichiers `.spec` PyInstaller |
+| --- | --- | --- |
+| DTLknowsWhy | Python, GUI, CLI, Agent | Fichiers `.spec` PyInstaller |
 | DTLsaysWhat | Python | PyInstaller `--onefile` |
 | GitDTL | Python / Tkinter | Fichier `.spec` PyInstaller |
 | GitHubMenu | Python / Tkinter | Fichier `.spec` PyInstaller |
 | DTLaudit | Python | PyInstaller `--onefile` |
-| NetDTL | PHP / MySQL | Pas de build requis |
+| DT4u | Python / Tkinter | PyInstaller `--onefile --noconsole` |
 
-DTLmenu les couvre depuis une fenêtre unique.
-
----
+NetDTL n'est plus affiché dans `DTLmenu.hta`.
 
 ## Prérequis
 
-- Windows avec `mshta.exe` ;
-- Python accessible via `python` dans le `PATH` ;
-- PyInstaller installé (`pip install pyinstaller`) ;
-- arborescence source de la suite NetDTL présente sur le disque.
+- Windows avec `mshta.exe`
+- Python disponible via `python` dans le `PATH`
+- PyInstaller disponible via `python -m PyInstaller`
+- un dossier racine commun contenant les projets listés ci-dessus
 
-Aucune autre dépendance : `DTLmenu.hta` est autonome.
+DTLmenu vérifie Python et PyInstaller avant de lancer un build. Si PyInstaller manque, il peut proposer :
 
----
-
-## Installation
-
-Copier `DTLmenu.hta` où vous voulez, idéalement près du dossier racine de la suite. Pas d'installateur, pas de registre, pas d'environnement virtuel obligatoire.
-
----
+```powershell
+python -m pip install --upgrade pyinstaller
+```
 
 ## Utilisation
 
-Double-cliquer sur `DTLmenu.hta`. Windows l'ouvre avec `mshta.exe`.
+Ouvrir :
 
-Sur certains systèmes, Windows peut afficher un avertissement de sécurité au premier lancement. Dans ce cas, clic droit sur le fichier, Propriétés, puis **Débloquer**.
+```text
+DTLmenu.hta
+```
 
-### Définir le dossier racine
+Définir `ROOT_DIR` sur le dossier parent qui contient les projets, puis cliquer sur **appliquer**.
 
-En haut de la fenêtre, définir `ROOT_DIR` sur le dossier qui contient les sous-dossiers des outils (`DTLknowsWhy`, `DTLsaysWhat`, `NetDTL`, `GitDTL`, `GitHubMenu`, `DTLaudit`). Cliquer sur **apply** pour propager le chemin.
+Exemple :
 
-### Options du menu
+```text
+D:\Documents\Mes sites Web\Secours catholique\outils
+```
+
+## Menu
 
 | Touche | Action |
-|-------|--------|
-| 1 | Build DTLknowsWhy : exécutable principal, variante CLI et Agent |
+| --- | --- |
+| 1 | Build DTLknowsWhy GUI, CLI et Agent |
 | 2 | Build DTLsaysWhat |
-| 3 | NetDTL : informations de chemin, pas de build |
-| 4 | Build GitDTL |
-| 5 | Build GitHubMenu |
-| 6 | Build DTLaudit |
+| 3 | Build GitDTL |
+| 4 | Build GitHubMenu |
+| 5 | Build DTLaudit |
+| 6 | Build DT4u |
 | 7 | Build de tous les outils Python |
 | 8 | Ouvrir un dossier `dist\` |
 | 9 | Vérifier Python et PyInstaller |
 | 0 | Quitter |
 
-### Exécution des builds
+## Fonctionnement d'un build
 
-Quand vous cliquez sur **exécuter**, DTLmenu génère un script `.cmd` temporaire puis le lance. Les builds utilisent PyInstaller et placent les exécutables dans les dossiers `dist`.
+Quand un build démarre, DTLmenu :
 
----
+1. appelle `DTLversion.py begin` pour le projet sélectionné ;
+2. génère un script de commandes temporaire dans `%TEMP%` ;
+3. écrit ce script en Unicode pour afficher correctement les messages français accentués ;
+4. lance PyInstaller ;
+5. restaure la version précédente si une commande Python/PyInstaller échoue ;
+6. laisse la fenêtre de commandes ouverte à la fin pour permettre la lecture du résultat.
 
-## Notes de conception
+## Versioning
 
-DTLmenu est une application `.hta` plutôt qu'une page `.html`, car les HTML Applications s'exécutent avec les droits nécessaires pour utiliser `WScript.Shell` et `Scripting.FileSystemObject`. Ces objets COM permettent d'écrire et lancer des scripts `.cmd` et d'ouvrir l'Explorateur Windows.
+`DTLversion.py` met à jour la version du projet avant compilation. Il prend actuellement en charge :
 
-L'interface utilise un CSS compatible avec le moteur d'Internet Explorer intégré à `mshta.exe`. L'esthétique terminal sombre, vert phosphore et police monospace suit l'identité visuelle de la suite NetDTL.
+- `DTLknowsWhy`
+- `DTLsaysWhat`
+- `GitDTL`
+- `GitHubMenu`
+- `DTLaudit`
+- `DT4u`
 
----
+Si un build échoue, le script temporaire appelle la commande de rollback générée par `DTLversion.py`.
+
+## Arborescence attendue
+
+```text
+outils\
+  DTLmenu\
+    DTLmenu.hta
+    DTLversion.py
+    DTLmenu.root
+  DTLknowsWhy\
+  DTLsaysWhat\
+  GitDTL\
+  GitHubMenu\
+  DTLaudit\
+  DT4u\
+```
+
+## Notes
+
+Le format HTA est encore utilisé parce qu'il permet d'accéder à `WScript.Shell` et `Scripting.FileSystemObject`, nécessaires pour écrire des scripts temporaires, lancer des commandes locales et ouvrir des dossiers dans l'Explorateur.
+
+HTA reste toutefois une technologie Windows ancienne. L'évolution recommandée est de remplacer DTLmenu par un lanceur Python/Tkinter, cohérent avec les autres outils DTL.
 
 ## Licence
 
-MIT - voir le dépôt principal NetDTL pour le texte complet.
-
-Partie de la **suite NetDTL** - [didiermorandi.com/netdtl](https://didiermorandi.com/netdtl)
-
-## Mise à jour - 14 juin 2026
-
-`DTLmenu.hta` est devenu un lanceur HTA complet pour la suite NetDTL.
-
-Nouveautés confirmées :
-
-- Le dossier racine de la suite est enregistré dans `DTLmenu.root`.
-- Le sélecteur de dossier permet de corriger le chemin racine sans modifier le fichier HTA.
-- Le menu vérifie Python et PyInstaller avant de lancer un build.
-- Si PyInstaller manque, l'outil propose `python -m pip install --upgrade pyinstaller`.
-- Les builds couverts sont `DTLknowsWhy`, `DTLsaysWhat`, `GitDTL`, `GitHubMenu` et `DTLaudit`.
-- Les builds DTLknowsWhy produisent les variantes GUI, CLI et Agent.
-- `DTLversion.py` est appelé avant les builds pour gérer la version, avec rollback dans le script temporaire généré.
-- `DTLGitMorning.ps1` fournit aussi un résumé Git matinal pour les dépôts de la suite.
+MIT.
