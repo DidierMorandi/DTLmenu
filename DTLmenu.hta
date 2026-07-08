@@ -616,10 +616,23 @@ function runTempScript(scriptName, lines) {
   var shell = getShell();
   var tmp = shell.ExpandEnvironmentStrings('%TEMP%');
   var path = tmp + '\\' + scriptName;
-  var file = fso.CreateTextFile(path, true, true);
+  var file = fso.CreateTextFile(path, true, false);
   file.Write(lines.join('\r\n'));
   file.Close();
   shell.Run('"' + path + '"', 1, false);
+}
+
+function cmdText(text) {
+  text = String(text);
+  text = text.replace(/[àáâãäå]/g, 'a').replace(/[ÀÁÂÃÄÅ]/g, 'A');
+  text = text.replace(/[èéêë]/g, 'e').replace(/[ÈÉÊË]/g, 'E');
+  text = text.replace(/[ìíîï]/g, 'i').replace(/[ÌÍÎÏ]/g, 'I');
+  text = text.replace(/[òóôõö]/g, 'o').replace(/[ÒÓÔÕÖ]/g, 'O');
+  text = text.replace(/[ùúûü]/g, 'u').replace(/[ÙÚÛÜ]/g, 'U');
+  text = text.replace(/[ç]/g, 'c').replace(/[Ç]/g, 'C');
+  text = text.replace(/[œ]/g, 'oe').replace(/[Œ]/g, 'OE');
+  text = text.replace(/[–—]/g, '-').replace(/[•]/g, '*');
+  return text.replace(/[^\x20-\x7E]/g, '?');
 }
 
 function offerPythonInstall() {
@@ -627,13 +640,12 @@ function offerPythonInstall() {
   if (!answer) return false;
   runTempScript('DTLmenu_install_python.cmd', [
     '@echo off',
-    'chcp 65001 >nul',
     'title Installation Python',
     'echo Installation de Python avec winget',
     'echo ================================================================',
     'winget install --id Python.Python.3.12 -e --source winget',
     'echo.',
-    'echo Si Python vient d\'être installé, fermez puis relancez DTLmenu.',
+    'echo Si Python vient d\'etre installe, fermez puis relancez DTLmenu.',
     'echo.',
     'pause'
   ]);
@@ -645,7 +657,6 @@ function offerPyInstallerInstall() {
   if (!answer) return false;
   runTempScript('DTLmenu_install_pyinstaller.cmd', [
     '@echo off',
-    'chcp 65001 >nul',
     'title Installation PyInstaller',
     'echo Installation de PyInstaller',
     'echo ================================================================',
@@ -654,7 +665,7 @@ function offerPyInstallerInstall() {
     'echo.',
     'python -m PyInstaller --version',
     'echo.',
-    'echo Si une version s\'affiche ci-dessus, PyInstaller est installé.',
+    'echo Si une version s\'affiche ci-dessus, PyInstaller est installe.',
     'echo Vous pouvez relancer la compilation dans DTLmenu.',
     'echo.',
     'pause'
@@ -801,7 +812,7 @@ function renderAll() {
 
   setLine('dt4u_1', 'cd /d "{DT4U}"');
   setLine('dt4u_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DT4U}" DT4u');
-  setLine('dt4u_3', 'python -m PyInstaller --onefile --noconsole --name DT4u DT4u.py');
+  setLine('dt4u_3', 'python -m PyInstaller DT4u.spec');
   setLine('dt4u_4', 'Executable attendu :');
   setLine('dt4u_5', '{DT4U}\\dist\\DT4u.exe');
 
@@ -827,8 +838,8 @@ function renderAll() {
   setLine('all_20', 'python -m PyInstaller --onefile --noconsole --name DTLaudit DTLaudit.py');
   setLine('all_21', 'cd /d "{DT4U}"');
   setLine('all_22', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DT4U}" DT4u');
-  setLine('all_23', 'python -m PyInstaller --onefile --noconsole --name DT4u DT4u.py');
-  setLine('all_24', 'Compilation terminée pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu, DTLaudit et DT4u.');
+  setLine('all_23', 'python -m PyInstaller DT4u.spec');
+  setLine('all_24', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu, DTLaudit et DT4u.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
@@ -877,9 +888,8 @@ function buildScript(blockId, title) {
   if (!el) return '';
   var lines = [];
   lines.push('@echo off');
-  lines.push('chcp 65001 >nul');
-  lines.push('title ' + title);
-  lines.push('echo ' + title);
+  lines.push('title ' + cmdText(title));
+  lines.push('echo ' + cmdText(title));
   lines.push('echo ================================================================');
   lines.push('echo.');
 
@@ -889,9 +899,9 @@ function buildScript(blockId, title) {
     var cls = spans[i].className;
     if (!t) continue;
     if (cls === 'dtl-cmd-comment') {
-      lines.push('rem ' + t);
+      lines.push('rem ' + cmdText(t));
     } else if (cls === 'dtl-cmd-echo') {
-      lines.push('echo ' + t);
+      lines.push('echo ' + cmdText(t));
     } else if (cls === 'dtl-cmd-line') {
       if (t.indexOf('DTLversion.py" begin ') >= 0) {
         lines.push('set "DTL_ROLLBACK=' + t.replace(' begin ', ' rollback ') + '"');
@@ -904,13 +914,13 @@ function buildScript(blockId, title) {
   }
 
   lines.push('echo.');
-  lines.push('echo Opération terminée.');
+  lines.push('echo Operation terminee.');
   lines.push('goto :end');
   lines.push(':error');
   lines.push('if defined DTL_ROLLBACK call %DTL_ROLLBACK%');
   lines.push('set "DTL_ROLLBACK="');
   lines.push('echo.');
-  lines.push('echo ERREUR : la dernière commande a échoué.');
+  lines.push('echo ERREUR : la derniere commande a echoue.');
   lines.push(':end');
   lines.push('echo.');
   lines.push('pause');
@@ -926,7 +936,7 @@ function runBlock(blockId, title) {
   var shell = getShell();
   var tmp   = shell.ExpandEnvironmentStrings('%TEMP%');
   var path  = tmp + '\\DTLmenu_run.cmd';
-  var f = fso.CreateTextFile(path, true, true);
+  var f = fso.CreateTextFile(path, true, false);
   f.Write(script);
   f.Close();
   shell.Run('"' + path + '"', 1, false);
