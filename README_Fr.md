@@ -22,7 +22,7 @@ DTLmenu est une application Windows HTML Application (`.hta`) utilisée pour com
 | GitDTL | Python / Tkinter | Fichier `.spec` PyInstaller |
 | GitHubMenu | Python / Tkinter | Fichier `.spec` PyInstaller |
 | DTLaudit | Python | PyInstaller `--onefile` |
-| DT4u | Python / Tkinter | PyInstaller `--onefile --noconsole` |
+| DTL4u | Python / Tkinter | PyInstaller `--onefile --noconsole` |
 
 NetDTL n'est plus affiché dans `DTLmenu.hta`.
 
@@ -64,7 +64,7 @@ D:\Documents\Mes sites Web\Secours catholique\outils
 | 3 | Build GitDTL |
 | 4 | Build GitHubMenu |
 | 5 | Build DTLaudit |
-| 6 | Build DT4u |
+| 6 | Build DTL4u |
 | 7 | Build de tous les outils Python |
 | 8 | Ouvrir un dossier `dist\` |
 | 9 | Vérifier Python et PyInstaller |
@@ -90,7 +90,7 @@ Quand un build démarre, DTLmenu :
 - `GitDTL`
 - `GitHubMenu`
 - `DTLaudit`
-- `DT4u`
+- `DTL4u`
 
 Si un build échoue, le script temporaire appelle la commande de rollback générée par `DTLversion.py`.
 
@@ -107,7 +107,7 @@ outils\
   GitDTL\
   GitHubMenu\
   DTLaudit\
-  DT4u\
+  DTL4u\
 ```
 
 ## Notes

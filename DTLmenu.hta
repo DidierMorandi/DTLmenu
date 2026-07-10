@@ -255,7 +255,7 @@
         </button>
         <button class="dtl-btn" onclick="show('dt4u')">
           <span class="dtl-btn-num">6</span>&nbsp;
-          DT4u <span class="dtl-tag dtl-tag-py">Python</span>
+          DTL4u <span class="dtl-tag dtl-tag-py">Python</span>
           <span class="dtl-btn-sub">Tkinter GUI</span>
         </button>
       </div>
@@ -393,14 +393,14 @@
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
     </div>
 
-    <!-- DT4u -->
+    <!-- DTL4u -->
     <div id="screen-dt4u" class="screen">
-      <p class="dtl-header">Compilation DT4u</p>
+      <p class="dtl-header">Compilation DTL4u</p>
       <hr class="dtl-sep">
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
-          <button class="dtl-run-btn" onclick="runBlock('blk-dt4u','Compilation DT4u')">&#9654; exécuter</button>
-          DT4u.exe
+          <button class="dtl-run-btn" onclick="runBlock('blk-dt4u','Compilation DTL4u')">&#9654; exécuter</button>
+          DTL4u.exe
         </div>
         <div id="blk-dt4u">
           <span class="dtl-cmd-line" id="dt4u_1"></span>
@@ -420,7 +420,7 @@
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
           <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; exécuter</button>
-          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu + DTLaudit + DT4u
+          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu + DTLaudit + DTL4u
         </div>
         <div id="blk-all">
           <span class="dtl-cmd-comment">--- DTLknowsWhy ---</span>
@@ -448,7 +448,7 @@
           <span class="dtl-cmd-line" id="all_18"></span>
           <span class="dtl-cmd-line" id="all_19"></span>
           <span class="dtl-cmd-line" id="all_20"></span>
-          <span class="dtl-cmd-comment">--- DT4u ---</span>
+          <span class="dtl-cmd-comment">--- DTL4u ---</span>
           <span class="dtl-cmd-line" id="all_21"></span>
           <span class="dtl-cmd-line" id="all_22"></span>
           <span class="dtl-cmd-line" id="all_23"></span>
@@ -498,7 +498,7 @@
 
 <script language="JScript">
 
-var REQUIRED_TOOLS = ['DTLKnowsWhy', 'DTLsaysWhat', 'GitDTL', 'GitHubMenu', 'DTLaudit', 'DT4u'];
+var REQUIRED_TOOLS = ['DTLKnowsWhy', 'DTLsaysWhat', 'GitDTL', 'GitHubMenu', 'DTLaudit', 'DTL4u'];
 
 function getFso() {
   return new ActiveXObject('Scripting.FileSystemObject');
@@ -694,7 +694,7 @@ function browseForRoot(message) {
 }
 
 function chooseRoot() {
-  var root = browseForRoot('Selectionnez le dossier outils qui contient DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu, DTLaudit et DT4u.');
+  var root = browseForRoot('Selectionnez le dossier outils qui contient DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu, DTLaudit et DTL4u.');
   if (!root) return false;
   document.getElementById('root-dir').value = root;
   return applyRoot();
@@ -749,7 +749,7 @@ function getPaths() {
     GDTL:  root + '\\GitDTL',
     GHM:   root + '\\GitHubMenu',
     DTA:   root + '\\DTLaudit',
-    DT4U:  root + '\\DT4u'
+    DT4U:  root + '\\DTL4u'
   };
 }
 
@@ -811,10 +811,10 @@ function renderAll() {
   setLine('dta_5', '{DTA}\\dist\\DTLaudit.exe');
 
   setLine('dt4u_1', 'cd /d "{DT4U}"');
-  setLine('dt4u_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DT4U}" DT4u');
-  setLine('dt4u_3', 'python -m PyInstaller DT4u.spec');
+  setLine('dt4u_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DT4U}" DTL4u');
+  setLine('dt4u_3', 'python -m PyInstaller DTL4u.spec');
   setLine('dt4u_4', 'Executable attendu :');
-  setLine('dt4u_5', '{DT4U}\\dist\\DT4u.exe');
+  setLine('dt4u_5', '{DT4U}\\dist\\DTL4u.exe');
 
   setLine('all_1',  'cd /d "{DKW}"');
   setLine('all_2',  'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DKW}" DTLknowsWhy');
@@ -837,9 +837,9 @@ function renderAll() {
   setLine('all_19', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTA}" DTLaudit');
   setLine('all_20', 'python -m PyInstaller --onefile --noconsole --name DTLaudit DTLaudit.py');
   setLine('all_21', 'cd /d "{DT4U}"');
-  setLine('all_22', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DT4U}" DT4u');
-  setLine('all_23', 'python -m PyInstaller DT4u.spec');
-  setLine('all_24', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu, DTLaudit et DT4u.');
+  setLine('all_22', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DT4U}" DTL4u');
+  setLine('all_23', 'python -m PyInstaller DTL4u.spec');
+  setLine('all_24', 'Compilation terminee pour DTLKnowsWhy, DTLsaysWhat, GitDTL, GitHubMenu, DTLaudit et DTL4u.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
