@@ -23,6 +23,7 @@ PROJECT_FILES = {
     "GitHubMenu": [("GitHubMenu.py", "APP_VERSION")],
     "DTLaudit": [("DTLaudit.py", "VERSION")],
     "DTL4u": [("DTL4u.py", "APP_VERSION")],
+    "DTLarchive": [("DTLarchive.py", "APP_VERSION")],
 }
 
 
