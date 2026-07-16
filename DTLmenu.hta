@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DTLmenu -- Suite DTL</title>
+<title>DTLmenu v1.0-5 -- Suite DTL</title>
 <HTA:APPLICATION
   APPLICATIONNAME="DTLmenu"
   CAPTION="yes"
@@ -12,6 +12,8 @@
   BORDER="thin"
 />
 <style>
+  html { overflow-x: hidden; }
+
   body {
     background: #090d12;
     font-family: "Courier New", Courier, monospace;
@@ -19,32 +21,57 @@
     margin: 0;
     padding: 0;
     color: #c9d1d9;
+    overflow-x: hidden;
   }
 
   .dtl-wrap {
-    width: 100%;
+    width: auto;
     background: #0d1117;
     border: 1px solid #30363d;
   }
 
-  .dtl-titlebar {
-    background: #161b22;
-    border-bottom: 1px solid #30363d;
-    padding: 9px 16px;
-    font-size: 14px;
-    color: #8b949e;
-    white-space: nowrap;
-  }
-  .dtl-dot {
-    display: inline-block;
-    width: 13px;
-    height: 13px;
-    border-radius: 7px;
-    vertical-align: middle;
-    margin-right: 5px;
-  }
-
   .dtl-body { padding: 20px 24px 28px; }
+
+  .dtl-brand {
+    width: 100%;
+    margin: 0 0 18px;
+    border-bottom: 1px solid #21262d;
+    border-collapse: collapse;
+  }
+  .dtl-brand-text {
+    vertical-align: top;
+    padding: 0 0 16px;
+  }
+  .dtl-brand-title {
+    color: #c9d1d9;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .dtl-brand-subtitle {
+    color: #8b949e;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0;
+  }
+  .dtl-brand-website {
+    color: #58a6ff;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0;
+  }
+  .dtl-brand-logo {
+    vertical-align: top;
+    text-align: right;
+    padding: 0 48px 16px 24px;
+  }
+  .dtl-brand-logo img {
+    display: block;
+    width: 135px;
+    height: 47px;
+    border: 0;
+  }
 
   .dtl-header { color: #00ff00; font-size: 16px; margin: 0 0 4px; }
   .dtl-sub    { color: #444c56; font-size: 12px; margin: 0 0 14px; }
@@ -208,8 +235,20 @@
 <body>
 
 <div class="dtl-wrap">
-  <div class="dtl-titlebar"><span class="dtl-dot" style="background:#ff5f57;"></span><span class="dtl-dot" style="background:#ffbd2e;"></span><span class="dtl-dot" style="background:#28c840;"></span>&nbsp; DTLmenu v1.0-3 &mdash; Lanceur de compilation Suite DTL</div>
   <div class="dtl-body">
+
+    <table class="dtl-brand" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="dtl-brand-text">
+          <p class="dtl-brand-title">DTLmenu v1.0-5</p>
+          <p class="dtl-brand-subtitle">Lanceur de compilation de la suite NetDTL</p>
+          <p class="dtl-brand-website">www.netdtl.com</p>
+        </td>
+        <td class="dtl-brand-logo">
+          <img src="../NetDTL_Web_Site/netdtl_logo_small.png" alt="NetDTL">
+        </td>
+      </tr>
+    </table>
 
     <div class="dtl-config">
       <label>ROOT_DIR&nbsp;&nbsp;</label>
@@ -222,10 +261,6 @@
 
     <!-- MAIN MENU -->
     <div id="screen-main" class="screen-active">
-      <p class="dtl-header">MENU DE COMPILATION DTL</p>
-      <p class="dtl-sub">DEC VT100 TRIBUTE &bull; MIT LICENSE &bull; netdtl.com</p>
-      <hr class="dtl-sep">
-
       <span class="dtl-section-label">Compilation individuelle</span>
       <div class="dtl-grid-wrap">
         <button class="dtl-btn" onclick="show('dtlknowswhy')">
@@ -559,6 +594,16 @@
 <script language="JScript">
 
 var REQUIRED_TOOLS = ['DTLKnowsWhy', 'DTLsaysWhat', 'GitDTL', 'GitHubMenu', 'DTLaudit', 'DTL4u', 'DTLarchive', 'DTLi18n'];
+
+function sizeApplicationWindow() {
+  var targetWidth = Math.min(1500, screen.availWidth);
+  var targetHeight = Math.min(850, screen.availHeight);
+  window.resizeTo(targetWidth, targetHeight);
+  window.moveTo(
+    Math.max(0, Math.round((screen.availWidth - targetWidth) / 2)),
+    Math.max(0, Math.round((screen.availHeight - targetHeight) / 2))
+  );
+}
 
 function getFso() {
   return new ActiveXObject('Scripting.FileSystemObject');
@@ -1041,9 +1086,11 @@ function openFolder(key) {
   }
 }
 
+sizeApplicationWindow();
 if (ensureValidRoot()) {
   ensurePyInstaller();
 }
+window.scrollTo(0, 0);
 </script>
 </body>
 </html>

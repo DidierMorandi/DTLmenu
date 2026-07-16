@@ -2,7 +2,7 @@
 
 **Graphical build launcher for the DTL tool suite - Windows HTA application**
 
-Version: v1.0-3
+Version: v1.0-5
 Website: [netdtl.com](https://netdtl.com)
 
 DTLmenu is a Windows HTML Application (`.hta`) used to build the Python tools of the DTL suite from one local graphical interface. It prepares the PyInstaller commands, writes a temporary `.cmd` script, runs it in a visible Command Prompt window, and opens output folders when needed.

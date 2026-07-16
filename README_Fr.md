@@ -2,7 +2,7 @@
 
 **Lanceur graphique de compilation pour la suite d'outils DTL - application Windows HTA**
 
-Version : v1.0-3
+Version : v1.0-5
 Site : [netdtl.com](https://netdtl.com)
 
 DTLmenu est une application Windows HTML Application (`.hta`) utilisée pour compiler les outils Python de la suite DTL depuis une interface graphique locale. Elle prépare les commandes PyInstaller, écrit un script `.cmd` temporaire, le lance dans une fenêtre de commandes visible et permet d'ouvrir les dossiers de sortie.
