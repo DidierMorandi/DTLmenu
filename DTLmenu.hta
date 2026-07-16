@@ -303,6 +303,11 @@
           DTLi18n <span class="dtl-tag dtl-tag-py">Python</span>
           <span class="dtl-btn-sub">onefile console</span>
         </button>
+        <button class="dtl-btn" onclick="show('dtlexplains')">
+          <span class="dtl-btn-num">E</span>&nbsp;
+          DTLexplains <span class="dtl-tag dtl-tag-py">Python</span>
+          <span class="dtl-btn-sub">onefile console</span>
+        </button>
       </div>
 
       <span class="dtl-section-label">Actions globales</span>
@@ -498,6 +503,26 @@
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
     </div>
 
+    <!-- DTLexplains -->
+    <div id="screen-dtlexplains" class="screen">
+      <p class="dtl-header">Compilation DTLexplains</p>
+      <hr class="dtl-sep">
+      <div class="dtl-cmd-box">
+        <div class="dtl-cmd-title">
+          <button class="dtl-run-btn" onclick="runBlock('blk-dtlexp','Compilation DTLexplains')">&#9654; exécuter</button>
+          DTLexplains.exe
+        </div>
+        <div id="blk-dtlexp">
+          <span class="dtl-cmd-line" id="dtlexp_1"></span>
+          <span class="dtl-cmd-line" id="dtlexp_2"></span>
+          <span class="dtl-cmd-line" id="dtlexp_3"></span>
+          <span class="dtl-cmd-echo" id="dtlexp_4"></span>
+          <span class="dtl-cmd-echo" id="dtlexp_5"></span>
+        </div>
+      </div>
+      <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
+    </div>
+
     <!-- Build all -->
     <div id="screen-all" class="screen">
       <p class="dtl-header">Compilation complète &mdash; outils Python DTL</p>
@@ -505,7 +530,7 @@
       <div class="dtl-cmd-box">
         <div class="dtl-cmd-title">
           <button class="dtl-run-btn" onclick="runBlock('blk-all','Compilation des outils Python DTL')">&#9654; exécuter</button>
-          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu + DTLaudit + DTL4u + DTLarchive + DTLi18n
+          DTLknowsWhy + DTLsaysWhat + GitDTL + GitHubMenu + DTLaudit + DTL4u + DTLarchive + DTLi18n + DTLexplains
         </div>
         <div id="blk-all">
           <span class="dtl-cmd-comment">--- DTLknowsWhy ---</span>
@@ -545,7 +570,11 @@
           <span class="dtl-cmd-line" id="all_27"></span>
           <span class="dtl-cmd-line" id="all_28"></span>
           <span class="dtl-cmd-line" id="all_29"></span>
-          <span class="dtl-cmd-echo" id="all_30"></span>
+          <span class="dtl-cmd-comment">--- DTLexplains ---</span>
+          <span class="dtl-cmd-line" id="all_30"></span>
+          <span class="dtl-cmd-line" id="all_31"></span>
+          <span class="dtl-cmd-line" id="all_32"></span>
+          <span class="dtl-cmd-echo" id="all_33"></span>
         </div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -564,6 +593,7 @@
         <div class="dtl-info-line"><span class="key">6 </span><span class="ipath" id="f-dt4u"></span> <button class="dtl-folder-btn" onclick="openFolder('dt4u')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">7 </span><span class="ipath" id="f-dtlar"></span> <button class="dtl-folder-btn" onclick="openFolder('dtlar')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">I </span><span class="ipath" id="f-dtli18n"></span> <button class="dtl-folder-btn" onclick="openFolder('dtli18n')">ouvrir</button></div>
+        <div class="dtl-info-line"><span class="key">E </span><span class="ipath" id="f-dtlexp"></span> <button class="dtl-folder-btn" onclick="openFolder('dtlexp')">ouvrir</button></div>
         <div class="dtl-info-line"><span class="key">8 </span><span class="ipath" id="f-root"></span> <button class="dtl-folder-btn" onclick="openFolder('root')">ouvrir</button></div>
       </div>
       <button class="dtl-back" onclick="show('main')">&lt; retour au menu</button>
@@ -593,7 +623,7 @@
 
 <script language="JScript">
 
-var REQUIRED_TOOLS = ['DTLKnowsWhy', 'DTLsaysWhat', 'GitDTL', 'GitHubMenu', 'DTLaudit', 'DTL4u', 'DTLarchive', 'DTLi18n'];
+var REQUIRED_TOOLS = ['DTLKnowsWhy', 'DTLsaysWhat', 'GitDTL', 'GitHubMenu', 'DTLaudit', 'DTL4u', 'DTLarchive', 'DTLi18n', 'DTLexplains'];
 
 function sizeApplicationWindow() {
   var targetWidth = Math.min(1500, screen.availWidth);
@@ -799,7 +829,7 @@ function browseForRoot(message) {
 }
 
 function chooseRoot() {
-  var root = browseForRoot('Selectionnez le dossier outils qui contient les projets DTL, dont DTLi18n.');
+  var root = browseForRoot('Selectionnez le dossier outils qui contient les projets DTL, dont DTLexplains.');
   if (!root) return false;
   document.getElementById('root-dir').value = root;
   return applyRoot();
@@ -856,7 +886,8 @@ function getPaths() {
     DTA:   root + '\\DTLaudit',
     DT4U:  root + '\\DTL4u',
     DTLAR: root + '\\DTLarchive',
-    DTLI18N: root + '\\DTLi18n'
+    DTLI18N: root + '\\DTLi18n',
+    DTLEXP: root + '\\DTLexplains'
   };
 }
 
@@ -871,6 +902,7 @@ function R(s) {
   s = s.replace(/\{DT4U\}/g,  p.DT4U);
   s = s.replace(/\{DTLAR\}/g, p.DTLAR);
   s = s.replace(/\{DTLI18N\}/g, p.DTLI18N);
+  s = s.replace(/\{DTLEXP\}/g, p.DTLEXP);
   return s;
 }
 
@@ -937,6 +969,12 @@ function renderAll() {
   setLine('dtli18n_4', 'Executable attendu :');
   setLine('dtli18n_5', '{DTLI18N}\\dist\\DTLi18n.exe');
 
+  setLine('dtlexp_1', 'cd /d "{DTLEXP}"');
+  setLine('dtlexp_2', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTLEXP}" DTLexplains');
+  setLine('dtlexp_3', 'python -m PyInstaller --onefile --console --name DTLexplains DTLexplains.py');
+  setLine('dtlexp_4', 'Executable attendu :');
+  setLine('dtlexp_5', '{DTLEXP}\\dist\\DTLexplains.exe');
+
   setLine('all_1',  'cd /d "{DKW}"');
   setLine('all_2',  'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DKW}" DTLknowsWhy');
   setLine('all_3',  'python -c "import psutil, win32serviceutil; print(\'Dependances DTLKnowsWhy OK\')"');
@@ -966,7 +1004,10 @@ function renderAll() {
   setLine('all_27', 'cd /d "{DTLI18N}"');
   setLine('all_28', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTLI18N}" DTLi18n');
   setLine('all_29', 'python -m PyInstaller --onefile --console --name DTLi18n DTLi18n.py');
-  setLine('all_30', 'Compilation terminee pour tous les outils, dont DTLi18n.');
+  setLine('all_30', 'cd /d "{DTLEXP}"');
+  setLine('all_31', 'python "{ROOT}\\DTLmenu\\DTLversion.py" begin "{DTLEXP}" DTLexplains');
+  setLine('all_32', 'python -m PyInstaller --onefile --console --name DTLexplains DTLexplains.py');
+  setLine('all_33', 'Compilation terminee pour tous les outils, dont DTLexplains.');
 
   setLine('pyi_1', 'cd /d "{ROOT}"');
   setLine('pyi_2', 'python --version');
@@ -981,6 +1022,7 @@ function renderAll() {
   document.getElementById('f-dt4u').innerText  = p.DT4U + '\\dist';
   document.getElementById('f-dtlar').innerText = p.DTLAR + '\\dist';
   document.getElementById('f-dtli18n').innerText = p.DTLI18N + '\\dist';
+  document.getElementById('f-dtlexp').innerText = p.DTLEXP + '\\dist';
   document.getElementById('f-root').innerText  = p.ROOT;
 }
 
@@ -1074,7 +1116,7 @@ function runBlock(blockId, title) {
 function openFolder(key) {
   if (!ensureValidRoot()) return;
   var p = getPaths();
-  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', ghm: p.GHM + '\\dist', dta: p.DTA + '\\dist', dt4u: p.DT4U + '\\dist', dtlar: p.DTLAR + '\\dist', dtli18n: p.DTLI18N + '\\dist', root: p.ROOT };
+  var dirs = { dkw: p.DKW + '\\dist', dsw: p.DSW + '\\dist', gdtl: p.GDTL + '\\dist', ghm: p.GHM + '\\dist', dta: p.DTA + '\\dist', dt4u: p.DT4U + '\\dist', dtlar: p.DTLAR + '\\dist', dtli18n: p.DTLI18N + '\\dist', dtlexp: p.DTLEXP + '\\dist', root: p.ROOT };
   var path = dirs[key];
   if (!path) return;
   var fso = getFso();

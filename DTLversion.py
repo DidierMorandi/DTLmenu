@@ -25,6 +25,7 @@ PROJECT_FILES = {
     "DTL4u": [("DTL4u.py", "APP_VERSION")],
     "DTLarchive": [("DTLarchive.py", "APP_VERSION")],
     "DTLi18n": [("DTLi18n.py", "APP_VERSION")],
+    "DTLexplains": [("DTLexplains.py", "APP_VERSION")],
 }
 
 
