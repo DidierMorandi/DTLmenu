@@ -2,7 +2,7 @@
 
 **Lanceur graphique de compilation pour la suite d'outils DTL - application Windows HTA**
 
-Version : v1.0-5
+Version : v1.0-6
 Site : [netdtl.com](https://netdtl.com)
 
 DTLmenu est une application Windows HTML Application (`.hta`) utilisée pour compiler les outils Python de la suite DTL depuis une interface graphique locale. Elle prépare les commandes PyInstaller, écrit un script `.cmd` temporaire, le lance dans une fenêtre de commandes visible et permet d'ouvrir les dossiers de sortie.
@@ -17,15 +17,16 @@ DTLmenu est une application Windows HTML Application (`.hta`) utilisée pour com
 
 | Outil | Stack | Méthode de build |
 | --- | --- | --- |
+| DTL4u | Python / Tkinter | PyInstaller `--onefile --noconsole` |
+| DTLarchive | Python | PyInstaller `--onefile --console` |
+| DTLaudit | Python | PyInstaller `--onefile` |
+| DTLdesktop | Python / Tkinter | Fichier `.spec` PyInstaller |
+| DTLexplains | Python | PyInstaller `--onefile --console` |
+| DTLi18n | Python | PyInstaller `--onefile --console` |
 | DTLknowsWhy | Python, GUI, CLI, Agent | Fichiers `.spec` PyInstaller |
 | DTLsaysWhat | Python | PyInstaller `--onefile` |
 | GitDTL | Python / Tkinter | Fichier `.spec` PyInstaller |
 | GitHubMenu | Python / Tkinter | Fichier `.spec` PyInstaller |
-| DTLaudit | Python | PyInstaller `--onefile` |
-| DTL4u | Python / Tkinter | PyInstaller `--onefile --noconsole` |
-| DTLarchive | Python | PyInstaller `--onefile --console` |
-| DTLi18n | Python | PyInstaller `--onefile --console` |
-| DTLexplains | Python | PyInstaller `--onefile --console` |
 
 NetDTL n'est plus affiché dans `DTLmenu.hta`.
 
@@ -62,18 +63,19 @@ D:\Documents\Mes sites Web\Secours catholique\outils
 
 | Touche | Action |
 | --- | --- |
-| 1 | Build DTLknowsWhy GUI, CLI et Agent |
-| 2 | Build DTLsaysWhat |
-| 3 | Build GitDTL |
-| 4 | Build GitHubMenu |
-| 5 | Build DTLaudit |
-| 6 | Build DTL4u |
-| 7 | Build DTLarchive |
-| I | Build DTLi18n |
-| E | Build DTLexplains |
+| 1 | Build DTL4u |
+| 2 | Build DTLarchive |
+| 3 | Build DTLaudit |
+| 4 | Build DTLdesktop |
+| 5 | Build DTLexplains |
+| 6 | Build DTLi18n |
+| 7 | Build DTLknowsWhy GUI, CLI et Agent |
+| 8 | Build DTLsaysWhat |
+| 9 | Build GitDTL |
+| 10 | Build GitHubMenu |
 | A | Build de tous les outils Python |
-| 8 | Ouvrir un dossier `dist\` |
-| 9 | Vérifier Python et PyInstaller |
+| D | Ouvrir un dossier `dist\` |
+| P | Vérifier Python et PyInstaller |
 | 0 | Quitter |
 
 ## Fonctionnement d'un build
@@ -91,15 +93,16 @@ Quand un build démarre, DTLmenu :
 
 `DTLversion.py` met à jour la version du projet avant compilation. Il prend actuellement en charge :
 
+- `DTL4u`
+- `DTLarchive`
+- `DTLaudit`
+- `DTLdesktop`
+- `DTLexplains`
+- `DTLi18n`
 - `DTLknowsWhy`
 - `DTLsaysWhat`
 - `GitDTL`
 - `GitHubMenu`
-- `DTLaudit`
-- `DTL4u`
-- `DTLarchive`
-- `DTLi18n`
-- `DTLexplains`
 
 Si un build échoue, le script temporaire appelle la commande de rollback générée par `DTLversion.py`.
 
@@ -111,15 +114,16 @@ outils\
     DTLmenu.hta
     DTLversion.py
     DTLmenu.root
+  DTL4u\
+  DTLarchive\
+  DTLaudit\
+  DTLdesktop\
+  DTLexplains\
+  DTLi18n\
   DTLknowsWhy\
   DTLsaysWhat\
   GitDTL\
   GitHubMenu\
-  DTLaudit\
-  DTL4u\
-  DTLarchive\
-  DTLi18n\
-  DTLexplains\
 ```
 
 ## Notes

@@ -22,6 +22,7 @@ PROJECT_FILES = {
     "GitDTL": [("GitDTL.py", "APP_VERSION")],
     "GitHubMenu": [("GitHubMenu.py", "APP_VERSION")],
     "DTLaudit": [("DTLaudit.py", "VERSION")],
+    "DTLdesktop": [("DTLdesktop.py", "VERSION")],
     "DTL4u": [("DTL4u.py", "APP_VERSION")],
     "DTLarchive": [("DTLarchive.py", "APP_VERSION")],
     "DTLi18n": [("DTLi18n.py", "APP_VERSION")],
